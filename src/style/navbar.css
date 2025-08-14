@@ -1,30 +1,37 @@
 /* barra fija (fondo y layout) */
-.navbar-nav{
+.navbar-nav {
   position: fixed;
-  top: 0; left: 0; right: 0;
+  top: 0;
+  left: 0;
+  right: 0;
   height: var(--nav-h);
   display: flex;
   align-items: center;
   padding: 0 var(--pad-x);
   z-index: 1000;
-  background: linear-gradient(180deg, rgba(0,0,0,.9), rgba(0,0,0,.6), rgba(0,0,0,0));
+  background: linear-gradient(180deg, rgba(0, 0, 0, .9), rgba(0, 0, 0, .6), rgba(0, 0, 0, 0));
   backdrop-filter: saturate(120%) blur(2px);
 }
 
 /* título rojo a la izquierda */
-.navbar-title{
+.navbar-title {
   position: fixed;
-  top: 0; left: var(--pad-x);
+  top: 0;
+  left: var(--pad-x);
   height: var(--nav-h);
-  display: flex; align-items: center;
+  display: flex;
+  align-items: center;
   margin: 0;
-  font-size: 28px; font-weight: 900; letter-spacing:.3px;
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: .3px;
   color: var(--red);
-  z-index: 1001;               /* por encima del fondo */
+  z-index: 1001;
+  /* por encima del fondo */
 }
 
 /* contenedor de listas: izquierda y derecha */
-.navbar-nav > ul{
+.navbar-nav>ul {
   /* el UL ocupa todo y reparte los 2 DIV internos (izq/der) */
   list-style: none;
   display: flex;
@@ -32,38 +39,49 @@
   gap: 24px;
   width: 100%;
   padding: 0;
-  margin: 0 0 0 200px;         /* espacio para no pisar el título */
+  margin: 0 0 0 200px;
+  /* espacio para no pisar el título */
+  
 }
 
 /* los dos DIV internos del UL se comportan como filas */
-.navbar-nav > ul > div{
+.navbar-nav>ul>div {
   display: flex;
   align-items: center;
   gap: 18px;
 }
 
 /* items */
-.navbar-nav li{
+.navbar-nav li {
   cursor: pointer;
   font-size: 14px;
   color: #ddd;
   transition: color .15s ease, transform .15s ease;
   white-space: nowrap;
+  text-decoration: none;
 }
-.navbar-nav li:hover{ color:#fff; transform: translateY(-1px); }
+
+.navbar-nav li:hover {
+  color: #fff;
+  transform: translateY(-1px);
+}
 
 /* “activo” de ejemplo para Inicio */
-.navbar-nav li:first-child{ font-weight: 600; }
+.navbar-nav li:first-child {
+  font-weight: 600;
+}
 
 /* separadores opcionales para acciones de la derecha */
-.navbar-nav > ul > div:last-child li{
-  opacity:.95;
+.navbar-nav>ul>div:last-child li {
+  opacity: .95;
 }
 
 /* tamaño de iconos */
 .navbar-nav i {
-  font-size: 20px; /* ajusta a gusto */
-  color: #ddd;     /* color base */
+  font-size: 20px;
+  /* ajusta a gusto */
+  color: #ddd;
+  /* color base */
   transition: color .15s ease, transform .15s ease;
 }
 
@@ -73,16 +91,40 @@
 }
 
 /* empuje de contenido por barra fija */
-body{ padding-top: var(--nav-h); }
-
-@media (max-width: 900px){
-  .navbar-title{ font-size: 22px }
-  .navbar-nav > ul{ margin-left: 120px; gap: 16px }
-  .navbar-nav > ul > div{ gap: 14px }
+body {
+  padding-top: var(--nav-h);
 }
-@media (max-width: 640px){
-  .navbar-nav{ height: 56px }
-  .navbar-title{ height:56px; font-size: 20px }
-  .navbar-nav > ul{ margin-left: 110px }
-  .navbar-nav li{ font-size: 13px }
+
+@media (max-width: 900px) {
+  .navbar-title {
+    font-size: 22px
+  }
+
+  .navbar-nav>ul {
+    margin-left: 120px;
+    gap: 16px
+  }
+
+  .navbar-nav>ul>div {
+    gap: 14px
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar-nav {
+    height: 56px
+  }
+
+  .navbar-title {
+    height: 56px;
+    font-size: 20px
+  }
+
+  .navbar-nav>ul {
+    margin-left: 110px
+  }
+
+  .navbar-nav li {
+    font-size: 13px;
+  }
 }

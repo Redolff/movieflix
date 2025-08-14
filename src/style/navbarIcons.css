@@ -1,0 +1,136 @@
+.navbar-icons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  margin-right: 30px;
+}
+
+.search-input {
+  right: 0;
+  width: 0;
+  opacity: 0;
+  padding: 6px 0;
+  border: none;
+  outline: none;
+  background-color: black;
+  color: white;
+  border-bottom: 1px solid white;
+  font-size: 14px;
+  transition: width 0.4s ease, opacity 0.3s ease, padding 0.3s ease;
+}
+
+.navbar-icons .search-input {
+  width: 200px;
+  /* ancho final */
+  opacity: 1;
+  padding: 6px 8px;
+}
+
+
+.notifications-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.notifications-dropdown {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  background-color: #141414;
+  color: white;
+  width: 280px;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease;
+  z-index: 100;
+}
+
+.notifications-dropdown h4 {
+  margin: 0;
+  padding: 10px;
+  font-size: 14px;
+  background-color: #1f1f1f;
+  border-bottom: 1px solid #333;
+}
+
+.notification-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px;
+  transition: background 0.3s ease;
+}
+
+.notification-item:hover {
+  background-color: #222;
+}
+
+.notification-item img {
+  width: 80px;
+  height: 45px;
+  object-fit: cover;
+  border-radius: 3px;
+}
+
+
+.notif-title {
+  font-size: 14px;
+  margin: 0;
+}
+
+.notif-date {
+  font-size: 12px;
+  color: #aaa;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.user-container {
+  position: relative;
+  cursor: pointer;
+}
+
+.user-dropdown {
+  position: absolute;
+  top: 35px;
+  right: 0;
+  background-color: #141414;
+  color: white;
+  width: 200px;
+  border-radius: 5px;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
+  animation: fadeIn 0.3s ease;
+  z-index: 100;
+}
+
+.user-item {
+  padding: 10px;
+  font-size: 14px;
+  transition: background 0.3s ease;
+}
+
+.user-item:hover {
+  background-color: #222;
+}
+
+.logout {
+  color: #e50914;
+}
+
+.user-dropdown hr {
+  border: none;
+  border-top: 1px solid #333;
+  margin: 5px 0;
+}

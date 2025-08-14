@@ -9,14 +9,12 @@ export const Movies = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                //const API = 'http://localhost:3000/movies'
                 const API = 'https://movies-api-xnrw.onrender.com/movies'
                 const response = await fetch(API)
                 if (!response.ok) {
                     throw new Error('Error fetch API')
                 }
                 const data = await response.json()
-                console.log('data: ', data)
                 setMovies(data)
             } catch (error) {
                 console.log(error)

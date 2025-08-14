@@ -1,14 +1,27 @@
 import './App.css'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
+
 import { Movies } from './components/Movies'
 import { Navbar } from './components/Navbar'
+import { Series } from './pages/Series'
+import { Games } from './pages/Games'
+import { Mylist } from './pages/Mylist'
 
 function App() {
 
   return (
-    <>
+    <Router>
       <Navbar />
-      <Movies />
-    </>
+      <Routes>
+        <Route path='/' element={<Movies />} />
+        <Route path='/series' element={<Series />} />
+        <Route path='/movies' element={<Movies />} />
+        <Route path='/games' element={<Games />} />
+        <Route path='/mylist' element={<Mylist />} />
+        <Route path='*' element={ <Navigate to={'/'} /> } />
+
+      </Routes>
+    </Router>
   )
 }
 

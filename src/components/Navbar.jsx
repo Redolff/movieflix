@@ -1,24 +1,22 @@
 import '../style/navbar.css'
+import { Link } from 'react-router-dom'
+import { NavbarIcons } from './NavbarIcons'
 
 export const Navbar = () => {
+
     return (
         <>
             <h1 className='navbar-title'>Movieflix</h1>
             <div className='navbar-nav'>
                 <ul>
                     <div>
-                        <li> Inicio </li>
-                        <li> Series </li>
-                        <li> Peliculas </li>
-                        <li> Juegos </li>
-                        <li> Mi lista </li>
+                        <Link to={'/'}> <li> Inicio </li> </Link>
+                        <Link to={'/series'}> <li> Series </li> </Link>
+                        <Link to={'/movies'}> <li> Peliculas </li> </Link>
+                        <Link to={'/games'}> <li> Juegos </li> </Link>
+                        <Link to={'/mylist'}> <li> Mi lista </li> </Link>
                     </div>
-
-                    <div>
-                        <li> <i className="fa-solid fa-magnifying-glass"></i>  </li>
-                        <li> <i className="fa-regular fa-bell"></i> </li>
-                        <li> <i className="fa-solid fa-user"></i> </li>
-                    </div>
+                    <NavbarIcons />
                 </ul>
             </div>
         </>
