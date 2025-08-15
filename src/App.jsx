@@ -6,6 +6,7 @@ import { Navbar } from './components/Navbar'
 import { Series } from './pages/Series'
 import { Games } from './pages/Games'
 import { Mylist } from './pages/Mylist'
+import { MovieDetail } from './pages/MovieDetail'
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
         <Route path='/' element={<Movies />} />
         <Route path='/series' element={<Series />} />
         <Route path='/movies' element={<Movies />} />
+        <Route path='/movies/:id' element={ <MovieDetail /> } />
         <Route path='/games' element={<Games />} />
         <Route path='/mylist' element={<Mylist />} />
         <Route path='*' element={ <Navigate to={'/'} /> } />

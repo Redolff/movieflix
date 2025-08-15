@@ -143,9 +143,9 @@
 .movie-card img {
     display: block;
     border-radius: 4px;
-    width: 220px;
+    width: 150px;
     /* ancho del poster */
-    height: 120px;
+    height: 250px;
     /* alto para estilo horizontal */
     object-fit: cover;
 }

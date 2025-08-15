@@ -1,0 +1,171 @@
+.movie-detail {
+    display: flex;
+    gap: 2rem;
+    padding: 3rem;
+    background-color: #141414;
+    color: white;
+    min-height: 80vh;
+    align-items: flex-start;
+}
+
+.movie-detail-poster {
+    width: 300px;
+    height: auto;
+    border-radius: 8px;
+    object-fit: cover;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+}
+
+.movie-detail-info {
+    flex: 1;
+}
+
+.movie-detail-info h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.movie-year {
+    font-size: 1rem;
+    opacity: 0.8;
+    margin-bottom: 1rem;
+}
+
+.movie-director,
+.movie-duration {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.movie-description {
+    margin: 1.5rem 0;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.movie-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.play-btn,
+.add-btn {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.play-btn {
+    background-color: #e50914;
+    color: white;
+}
+
+.play-btn:hover {
+    background-color: #f40612;
+}
+
+.add-btn {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+.add-btn:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+/* Skeleton Loader */
+.movie-skeleton {
+    display: flex;
+    gap: 2rem;
+    padding: 3rem;
+    background-color: #141414;
+}
+
+.skeleton-poster {
+    width: 300px;
+    height: 450px;
+    background-color: #2a2a2a;
+    border-radius: 8px;
+    animation: pulse 1.5s infinite;
+}
+
+.skeleton-info {
+    flex: 1;
+}
+
+.skeleton-title {
+    width: 60%;
+    height: 30px;
+    background-color: #2a2a2a;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    animation: pulse 1.5s infinite;
+}
+
+.skeleton-line {
+    height: 16px;
+    background-color: #2a2a2a;
+    border-radius: 4px;
+    margin-bottom: 0.8rem;
+    animation: pulse 1.5s infinite;
+}
+
+.skeleton-line.short {
+    width: 40%;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
+}
+
+/* Not found */
+.container {
+    animation: fadeIn 1.2s ease-in-out;
+    display: block;
+    justify-items: center;
+    justify-content: center;
+}
+
+.icon {
+    font-size: 100px;
+    margin-bottom: 20px;
+    animation: bounce 1.5s infinite;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-10px);
+    }
+}
