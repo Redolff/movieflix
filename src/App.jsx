@@ -1,8 +1,9 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 
-import { Movies } from './components/Movies'
 import { Navbar } from './components/Navbar'
+import { Inicio } from './pages/Inicio'
+import { Movies } from './pages/Movies'
 import { Series } from './pages/Series'
 import { Games } from './pages/Games'
 import { Mylist } from './pages/Mylist'
@@ -14,7 +15,7 @@ function App() {
     <Router>
       <Navbar />
       <Routes>
-        <Route path='/' element={<Movies />} />
+        <Route path='/' element={<Inicio />} />
         <Route path='/series' element={<Series />} />
         <Route path='/movies' element={<Movies />} />
         <Route path='/movies/:id' element={ <MovieDetail /> } />
