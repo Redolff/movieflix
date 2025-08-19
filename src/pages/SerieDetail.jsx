@@ -2,30 +2,29 @@ import '../style/movieDetail.css'
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 
-export const MovieDetail = () => {
+export const SerieDetail = () => {
     const { id } = useParams()
-    const [movie, setMovie] = useState(null)
+    const [serie, setSerie] = useState(null)
     const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        const fetchMovie = async () => {
+        const fetchSerie = async () => {
             setLoading(true)
             try {
-                const response = await fetch(`https://movies-api-xnrw.onrender.com/movies/${id}`)
+                const response = await fetch(`http://localhost:3000/series/${id}`)
                 if (!response.ok) {
                     console.error('Error fetching response')
                 }
                 const data = await response.json()
-                setMovie(data)
+                setSerie(data)
             } catch (error) {
-                console.error('Error cargando la pelicula: ', error)
+                console.error('Error cargando la serie: ', error)
             } finally {
                 setLoading(false)
             }
         }
-        fetchMovie()
+        fetchSerie()
     }, [id])
-
 
     if (loading) {
         return (
@@ -41,35 +40,36 @@ export const MovieDetail = () => {
         )
     }
 
-    if (!movie) return (
+    if (!serie) return (
         <div className="container">
             <div className="icon">🎬</div>
-            <h1>404 - Película no encontrada</h1>
-            <p>Parece que la película que buscas no está en nuestra base de datos.
+            <h1>404 - Serie no encontrada</h1>
+            <p>Parece que la serie que buscas no está en nuestra base de datos.
                 Verifica el nombre o vuelve a la página principal para seguir explorando.</p>
             <a href="/">Volver al inicio</a>
         </div>
     )
 
     return (
-        <div key={movie.id} className="movie-detail">
-            <img src={movie.poster} alt={movie.title} className="movie-detail-poster" />
+        <div key={serie.id} className="movie-detail">
+            <img src={serie.poster} alt={serie.title} className="movie-detail-poster" />
             <div className="movie-detail-info">
-                <h1>{movie.title}</h1>
-                <p className="movie-year"><strong>Año:</strong> {movie.year}</p>
-                <p className="movie-director"><strong>Director:</strong> {movie.director}</p>
-                <p className="movie-duration"><strong>Duración:</strong> {movie.duration} min</p>
+                <h1>{serie.title}</h1>
+                <p className="movie-year"><strong>Año:</strong> {serie.year}</p>
+                <p className="movie-director"><strong>Director:</strong> {serie.director}</p>
+                <p className="movie-duration"><strong>Temporadas:</strong> {serie.seasons} </p>
+                <p className="movie-duration"><strong>Episodios totales:</strong> {serie.episodes} </p>
                 <div className="movie-actions">
                     <button
                         className="play-btn"
-                        onClick={() => console.log('Reproducir: ', movie.title)}
+                        onClick={() => console.log('Reproducir: ', serie.title)}
                     >
                         <i className="fa-solid fa-play"></i>
                         Reproducir
                     </button>
                     <button
                         className="add-btn"
-                        onClick={() => console.log('Agregar a mi lista: ', movie)}
+                        onClick={() => console.log('Agregar a la lista: ', serie)}
                     >
                         <i className="fa-solid fa-plus"></i>
                         Mi lista

@@ -4,17 +4,21 @@ import { Serie } from "../components/Serie";
 
 export const Series = () => {
     const [series, setSeries] = useState([])
-    const rowRef = useRef(null);
+    const rowRef = useRef(null)
 
     useEffect(() => {
         const fetchData = async () => {
-            const API = "http://localhost:3000/series"
-            const response = await fetch(API)
-            if (!response.ok) {
-                throw new Error('Error fetch API')
+            try {
+                const API = 'http://localhost:3000/series'
+                const response = await fetch(API)
+                if(!response.ok){
+                    throw new Error('Error fetch API')
+                }
+                const data = await response.json()
+                setSeries(data)
+            } catch(error) {
+                console.error(error)
             }
-            const data = await response.json()
-            setSeries(data)
         }
         fetchData()
     }, [])

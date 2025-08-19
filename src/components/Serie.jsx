@@ -1,9 +1,15 @@
 import '../style/movies.css'
+import { useNavigate } from 'react-router-dom'
 
 export const Serie = ({ serie }) => {
+    const navigate = useNavigate()
+
+    const handleNavigate = (serie) => {
+        navigate(`/series/${serie.id}`)
+    }
 
     return (
-        <div onClick={() => console.log('id: ', serie.id)}   
+        <div onClick={() => handleNavigate(serie)}   
             key={serie.id}
             className="movie-card"
         >
