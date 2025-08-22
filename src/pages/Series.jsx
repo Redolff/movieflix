@@ -1,27 +1,11 @@
-import { useEffect, useRef, useState } from "react"
 import '../style/movies.css'
+import { useRef } from "react"
 import { Serie } from "../components/Serie";
+import { useFetchData } from "../hooks/useFetchData";
 
 export const Series = () => {
-    const [series, setSeries] = useState([])
+    const { data: series } = useFetchData("series")
     const rowRef = useRef(null)
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const API = 'http://localhost:3000/series'
-                const response = await fetch(API)
-                if(!response.ok){
-                    throw new Error('Error fetch API')
-                }
-                const data = await response.json()
-                setSeries(data)
-            } catch(error) {
-                console.error(error)
-            }
-        }
-        fetchData()
-    }, [])
 
     const scrollByAmount = (dir) => {
         const row = rowRef.current;

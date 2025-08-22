@@ -1,27 +1,23 @@
 import '../style/movies.css'
-import { useMovies } from "../hooks/useMovies"
 import { MovieCarrousel } from "../components/MovieCarrousel"
-import { useMoviesByYear } from '../hooks/useMoviesByYear'
-import { useState } from 'react'
-import { useMoviesByGenre } from '../hooks/useMoviesByGenre'
+import { useFetchData } from '../hooks/useFetchData'
 
 export const Movies = () => {
-    const [year, setYear] = useState(2006)
-    const { movies } = useMovies()
-    const { moviesYear } = useMoviesByYear(1994)
-    const { moviesGenre: actionMovies } = useMoviesByGenre("action")
-    const { moviesGenre: dramaMovies } = useMoviesByGenre("drama")
-    const { moviesGenre: comediaMovies } = useMoviesByGenre("crime")
+    const { data: allMovies } = useFetchData("movies")
+    const { data: actionMovies } = useFetchData("movies", { genre: "action" })
+    const { data: crimeMovies } = useFetchData("movies", { genre: "crime" })
+    const { data: dramaMovies } = useFetchData("movies", { genre: "drama" })
+    const { data: moviesYear } = useFetchData("movies", { year: 2000 })
 
     return (
         <div>
-            <MovieCarrousel title={`Todas las peliculas`} movies={movies} />
-            
+            <MovieCarrousel title={`Todas las peliculas`} movies={allMovies} />
+
             <MovieCarrousel title={`Películas de Accion`} movies={actionMovies} />
-            <MovieCarrousel title={`Películas de Comedia`} movies={comediaMovies} />
+            <MovieCarrousel title={`Películas de Crimen`} movies={crimeMovies} />
             <MovieCarrousel title={`Películas de Drama`} movies={dramaMovies} />
 
-            <MovieCarrousel title={`Películas del año 1994`} movies={moviesYear} />
+            <MovieCarrousel title={`Películas del año 2000`} movies={moviesYear} />
         </div>
     )
 }

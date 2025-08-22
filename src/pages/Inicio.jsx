@@ -1,13 +1,16 @@
-import { Games } from "./Games"
-import { Movies } from "./Movies"
-import { Series } from "./Series"
+import { MovieCarrousel } from "../components/MovieCarrousel"
+import { useFetchData } from "../hooks/useFetchData"
 
 export const Inicio = () => {
+    const { data: allMovies } = useFetchData("movies")
+    const { data: allSeries } = useFetchData("series")
+    const { data: allGames } = useFetchData("games")
+
     return (
         <>
-            <Movies />
-            <Series />
-            <Games />
+            <MovieCarrousel title={`Todas las películas`} movies={allMovies} />
+            <MovieCarrousel title={`Todas las series`} movies={allSeries} />
+            <MovieCarrousel title={`Todos los juegos`} movies={allGames} />
         </>
     )
 }

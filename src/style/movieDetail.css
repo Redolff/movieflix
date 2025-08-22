@@ -145,6 +145,16 @@
     animation: bounce 1.5s infinite;
 }
 
+.container a {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+    align-items: center;
+    font-size: 20px;
+    text-decoration: none;
+    color: red;
+}
+
 /* Animaciones */
 @keyframes fadeIn {
     from {

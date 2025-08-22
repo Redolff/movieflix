@@ -9,6 +9,7 @@ import { Series } from './pages/Series'
 import { SerieDetail } from './pages/SerieDetail'
 import { Games } from './pages/Games'
 import { Mylist } from './pages/Mylist'
+import { GameDetail } from './pages/GameDetail'
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Route path='/series' element={<Series />} />
         <Route path='/series/:id' element={<SerieDetail />} />
         <Route path='/games' element={<Games />} />
+        <Route path='/games/:id' element={<GameDetail />} />
         <Route path='/mylist' element={<Mylist />} />
         <Route path='*' element={ <Navigate to={'/'} /> } />
 

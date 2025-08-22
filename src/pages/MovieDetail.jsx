@@ -1,10 +1,10 @@
 import '../style/movieDetail.css'
 import { useParams } from "react-router-dom"
-import { useMovie } from '../hooks/useMovie'
+import { useFetchId } from '../hooks/useFetchid'
 
 export const MovieDetail = () => {
     const { id } = useParams()
-    const { movieId, loading } = useMovie(id)
+    const { dataId: movie, loading } = useFetchId("movies", id)
 
     if (loading) {
         return (
@@ -20,7 +20,7 @@ export const MovieDetail = () => {
         )
     }
 
-    if (!movieId) return (
+    if (!movie) return (
         <div className="container">
             <div className="icon">🎬</div>
             <h1>404 - Película no encontrada</h1>
@@ -31,17 +31,17 @@ export const MovieDetail = () => {
     )
 
     return (
-        <div key={movieId.id} className="movie-detail">
-            <img src={movieId.poster} alt={movieId.title} className="movie-detail-poster" />
+        <div key={movie.id} className="movie-detail">
+            <img src={movie.poster} alt={movie.title} className="movie-detail-poster" />
             <div className="movie-detail-info">
-                <h1>{movieId.title}</h1>
-                <p className="movie-year"><strong>Año:</strong> {movieId.year}</p>
-                <p className="movie-director"><strong>Director:</strong> {movieId.director}</p>
-                <p className="movie-duration"><strong>Duración:</strong> {movieId.duration} min</p>
+                <h1>{movie.title}</h1>
+                <p className="movie-year"><strong>Año:</strong> {movie.year}</p>
+                <p className="movie-director"><strong>Director:</strong> {movie.director}</p>
+                <p className="movie-duration"><strong>Duración:</strong> {movie.duration} min</p>
                 <div className="movie-actions">
                     <button
                         className="play-btn"
-                        onClick={() => console.log('Reproducir: ', movieId.title)}
+                        onClick={() => console.log('Reproducir: ', movie.title)}
                     >
                         <i className="fa-solid fa-play"></i>
                         Reproducir

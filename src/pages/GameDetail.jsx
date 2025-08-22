@@ -1,10 +1,11 @@
 import '../style/movieDetail.css'
 import { useParams } from "react-router-dom"
-import { useFetchId } from '../hooks/useFetchid'
+import { useFetchId } from "../hooks/useFetchid"
 
-export const SerieDetail = () => {
+export const GameDetail = () => {
     const { id } = useParams()
-    const { dataId: serie, loading } = useFetchId("series", id)
+    const { dataId: game, loading } = useFetchId("games", id)
+    console.log('game: ', game)
 
     if (loading) {
         return (
@@ -20,36 +21,37 @@ export const SerieDetail = () => {
         )
     }
 
-    if (!serie) return (
+    if (!game) return (
         <div className="container">
             <div className="icon">🎬</div>
-            <h1>404 - Serie no encontrada</h1>
-            <p>Parece que la serie que buscas no está en nuestra base de datos.
+            <h1>404 - Juego no encontrado</h1>
+            <p>Parece que el juego que buscas no está en nuestra base de datos.
                 Verifica el nombre o vuelve a la página principal para seguir explorando.</p>
             <a href="/">Volver al inicio</a>
         </div>
     )
 
     return (
-        <div key={serie.id} className="movie-detail">
-            <img src={serie.poster} alt={serie.title} className="movie-detail-poster" />
+        <div key={game.id} className="movie-detail">
+            <img src={game.poster} alt={game.title} className="movie-detail-poster" />
             <div className="movie-detail-info">
-                <h1>{serie.title}</h1>
-                <p className="movie-year"><strong>Año:</strong> {serie.year}</p>
-                <p className="movie-director"><strong>Director:</strong> {serie.director}</p>
-                <p className="movie-duration"><strong>Temporadas:</strong> {serie.seasons} </p>
-                <p className="movie-duration"><strong>Episodios totales:</strong> {serie.episodes} </p>
+                <h1>{game.title}</h1>
+                <p className="movie-year"><strong>Año:</strong> {game.year}</p>
+                <p className="movie-duration"><strong>Desarrollador:</strong> {game.developer} </p>
+                <p className="movie-director"><strong>Multijugador:</strong> {game.multiplayer === false ? 'No' : 'Si'}</p>
+                <p className="movie-duration"><strong>Genero:</strong> {game.genre[0]} </p>
+                <p className="movie-duration"><strong>Plataforma:</strong> {game.platform[0]} </p>
                 <div className="movie-actions">
                     <button
                         className="play-btn"
-                        onClick={() => console.log('Reproducir: ', serie.title)}
+                        onClick={() => console.log('Reproducir: ', game.title)}
                     >
                         <i className="fa-solid fa-play"></i>
                         Reproducir
                     </button>
                     <button
                         className="add-btn"
-                        onClick={() => console.log('Agregar a la lista: ', serie)}
+                        onClick={() => console.log('Agregar a la lista: ', game)}
                     >
                         <i className="fa-solid fa-plus"></i>
                         Mi lista

@@ -1,6 +1,15 @@
+import '../style/movies.css'
+import { useNavigate } from "react-router-dom"
+
 export const Game = ({ game }) => {
+    const navigate = useNavigate()
+
+    const handleNavigate = (game) => {
+        navigate(`/games/${game.id}`)
+    }
+
     return (
-        <div onClick={() => console.log('id: ', game.id)}
+        <div onClick={() => handleNavigate(game)}
             key={game.id}
             className="movie-card"
         >

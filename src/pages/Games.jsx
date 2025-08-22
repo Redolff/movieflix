@@ -1,26 +1,10 @@
-import { useEffect, useRef, useState } from "react"
+import { useRef } from "react"
 import { Game } from "../components/Game"
+import { useFetchData } from "../hooks/useFetchData"
 
 export const Games = () => {
-    const [games, setGames] = useState([])
+    const { data: games } = useFetchData("games") 
     const rowRef = useRef()
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try{
-                const API = 'http://localhost:3000/games'
-                const response = await fetch(API)
-                if(!response.ok){
-                    throw new Error("Error fetch API")
-                }
-                const data = await response.json()
-                setGames(data)
-            }catch(e){
-                console.error(e)
-            }
-        }
-        fetchData() 
-    }, [])
 
     const scrollByAmount = (dir) => {
         const row = rowRef.current;
