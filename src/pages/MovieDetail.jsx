@@ -1,5 +1,6 @@
 import '../style/movieDetail.css'
-import { useParams } from "react-router-dom"
+
+import { Link, useParams } from "react-router-dom"
 import { useFetchId } from '../hooks/useFetchid'
 
 export const MovieDetail = () => {
@@ -26,7 +27,9 @@ export const MovieDetail = () => {
             <h1>404 - Película no encontrada</h1>
             <p>Parece que la película que buscas no está en nuestra base de datos.
                 Verifica el nombre o vuelve a la página principal para seguir explorando.</p>
-            <a href="/">Volver al inicio</a>
+            <Link to="/" className="link-home">
+                Volver al inicio
+            </Link>
         </div>
     )
 

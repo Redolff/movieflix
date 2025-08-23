@@ -145,7 +145,7 @@
     animation: bounce 1.5s infinite;
 }
 
-.container a {
+.container .link-home {
     display: flex;
     justify-content: center;
     justify-items: center;

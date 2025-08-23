@@ -4,7 +4,7 @@ import '../style/navbarIcons.css'
 import { useRef, useState } from 'react'
 
 export const Notifications = () => {
-    const { data: moviesPremiere } = useFetchData("movies", { year: 2019 })
+    const { data: moviesPremiere } = useFetchData("movies", { fromYear: 2025 })
     const [openNotifications, setOpenNotifications] = useState(false)
     const notifIconRef = useRef(null)
     const notifMenuRef = useRef(null)

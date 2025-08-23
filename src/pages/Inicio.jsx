@@ -1,4 +1,7 @@
-import { MovieCarrousel } from "../components/MovieCarrousel"
+import { Carrousels } from "../components/Carrousels"
+import { Game } from "../components/Game"
+import { Movie } from "../components/Movie"
+import { Serie } from "../components/Serie"
 import { useFetchData } from "../hooks/useFetchData"
 
 export const Inicio = () => {
@@ -8,9 +11,21 @@ export const Inicio = () => {
 
     return (
         <>
-            <MovieCarrousel title={`Todas las películas`} movies={allMovies} />
-            <MovieCarrousel title={`Todas las series`} movies={allSeries} />
-            <MovieCarrousel title={`Todos los juegos`} movies={allGames} />
+            <Carrousels 
+                title={`Todas las películas`} 
+                items={allMovies} 
+                renderItem={(allMovies) => <Movie movie={allMovies} key={allMovies.id} />}
+            />
+            <Carrousels 
+                title={`Todas las series`} 
+                items={allSeries} 
+                renderItem={(allSeries) => <Serie serie={allSeries} key={allSeries.id} />}
+            />
+            <Carrousels 
+                title={`Todos los juegos`} 
+                items={allGames} 
+                renderItem={(allGames) => <Game game={allGames} key={allGames.id} />}
+            />
         </>
     )
 }

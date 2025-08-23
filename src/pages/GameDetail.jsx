@@ -47,7 +47,7 @@ export const GameDetail = () => {
                         onClick={() => console.log('Reproducir: ', game.title)}
                     >
                         <i className="fa-solid fa-play"></i>
-                        Reproducir
+                        Jugar
                     </button>
                     <button
                         className="add-btn"

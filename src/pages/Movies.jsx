@@ -1,6 +1,7 @@
 import '../style/movies.css'
-import { MovieCarrousel } from "../components/MovieCarrousel"
+import { Carrousels } from "../components/Carrousels"
 import { useFetchData } from '../hooks/useFetchData'
+import { Movie } from '../components/Movie'
 
 export const Movies = () => {
     const { data: allMovies } = useFetchData("movies")
@@ -11,13 +12,32 @@ export const Movies = () => {
 
     return (
         <div>
-            <MovieCarrousel title={`Todas las peliculas`} movies={allMovies} />
+            <Carrousels 
+                title={`Todas las peliculas`} 
+                items={allMovies} 
+                renderItem={(allMovies) => <Movie movie={allMovies} key={allMovies.id} /> } 
+            />
+            <Carrousels 
+                title={`Películas de Accion`} 
+                items={actionMovies} 
+                renderItem={(actionMovies) => <Movie movie={actionMovies} key={actionMovies.id} /> } 
+            />
+            <Carrousels 
+                title={`Películas de Crimen`} 
+                items={crimeMovies} 
+                renderItem={(crimeMovies) => <Movie movie={crimeMovies} key={crimeMovies.id} /> } 
+            />
+            <Carrousels 
+                title={`Películas de Drama`} 
+                items={dramaMovies} 
+                renderItem={(dramaMovies) => <Movie movie={dramaMovies} key={dramaMovies.id} /> } 
+            />
 
-            <MovieCarrousel title={`Películas de Accion`} movies={actionMovies} />
-            <MovieCarrousel title={`Películas de Crimen`} movies={crimeMovies} />
-            <MovieCarrousel title={`Películas de Drama`} movies={dramaMovies} />
-
-            <MovieCarrousel title={`Películas del año 2000`} movies={moviesYear} />
+            <Carrousels 
+                title={`Películas del año 2000`} 
+                items={moviesYear} 
+                renderItem={(moviesYear) => <Movie movie={moviesYear} key={moviesYear.id} /> } 
+            />
         </div>
     )
 }

@@ -1,7 +1,6 @@
 import { useRef } from "react"
-import { Movie } from "./Movie";
 
-export const MovieCarrousel = ({ title, movies }) => {
+export const Carrousels = ({ title, items, renderItem }) => {
     const rowRef = useRef(null)
 
     const scrollByAmount = (dir) => {
@@ -26,9 +25,7 @@ export const MovieCarrousel = ({ title, movies }) => {
                 </button>
 
                 <section className="movies-row" ref={rowRef}>
-                    {movies.map((movie) => (
-                        <Movie movie={movie} key={movie.id} />
-                    ))}
+                    {items.map((item) => renderItem(item))}
                 </section>
 
                 <button
