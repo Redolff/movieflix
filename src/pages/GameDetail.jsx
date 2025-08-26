@@ -1,11 +1,17 @@
 import '../style/movieDetail.css'
 import { useParams } from "react-router-dom"
 import { useFetchId } from "../hooks/useFetchid"
+import { useDeleteData } from '../hooks/useDeleteData'
 
 export const GameDetail = () => {
     const { id } = useParams()
     const { dataId: game, loading } = useFetchId("games", id)
-    console.log('game: ', game)
+    const { handleDelete } = useDeleteData("games", id)
+
+    const user = {
+        name: 'Federico',
+        role: 'admin'
+    }
 
     if (loading) {
         return (
@@ -42,20 +48,41 @@ export const GameDetail = () => {
                 <p className="movie-duration"><strong>Genero:</strong> {game.genre[0]} </p>
                 <p className="movie-duration"><strong>Plataforma:</strong> {game.platform[0]} </p>
                 <div className="movie-actions">
-                    <button
-                        className="play-btn"
-                        onClick={() => console.log('Reproducir: ', game.title)}
-                    >
-                        <i className="fa-solid fa-play"></i>
-                        Jugar
-                    </button>
-                    <button
-                        className="add-btn"
-                        onClick={() => console.log('Agregar a la lista: ', game)}
-                    >
-                        <i className="fa-solid fa-plus"></i>
-                        Mi lista
-                    </button>
+                    <div className='movie-actions-top'>
+                        <button
+                            className="play-btn"
+                            onClick={() => console.log('Reproducir: ', game.title)}
+                        >
+                            <i className="fa-solid fa-play"></i>
+                            Reproducir
+                        </button>
+                        <button
+                            className="add-btn"
+                            onClick={() => console.log('Agregar a mi lista: ', game)}
+                        >
+                            <i className="fa-solid fa-plus"></i>
+                            Mi lista
+                        </button>
+                    </div>
+                    {/* Solo admins ven este botón */}
+                    {user?.role === "admin" && (
+                        <div className='movie-actions-bottom'>
+                            <button
+                                className="btn btn-outline"
+                                onClick={() => console.log('Editar game: ', game)}
+                            >
+                                <i className="fa-solid fa-pen"></i>
+                                Editar
+                            </button>
+                            <button
+                                className="btn btn-danger"
+                                onClick={(handleDelete)}
+                            >
+                                <i className="fa-solid fa-trash"></i>
+                                Eliminar
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

@@ -2,10 +2,17 @@ import '../style/movieDetail.css'
 
 import { Link, useParams } from "react-router-dom"
 import { useFetchId } from '../hooks/useFetchid'
+import { useDeleteData } from '../hooks/useDeleteData'
 
 export const MovieDetail = () => {
     const { id } = useParams()
     const { dataId: movie, loading } = useFetchId("movies", id)
+    const { handleDelete } = useDeleteData("movies", id)
+
+    const user = {
+        name: 'Federico',
+        role: 'admin'
+    }
 
     if (loading) {
         return (
@@ -41,21 +48,43 @@ export const MovieDetail = () => {
                 <p className="movie-year"><strong>Año:</strong> {movie.year}</p>
                 <p className="movie-director"><strong>Director:</strong> {movie.director}</p>
                 <p className="movie-duration"><strong>Duración:</strong> {movie.duration} min</p>
+                
                 <div className="movie-actions">
-                    <button
-                        className="play-btn"
-                        onClick={() => console.log('Reproducir: ', movie.title)}
-                    >
-                        <i className="fa-solid fa-play"></i>
-                        Reproducir
-                    </button>
-                    <button
-                        className="add-btn"
-                        onClick={() => console.log('Agregar a mi lista: ', movie)}
-                    >
-                        <i className="fa-solid fa-plus"></i>
-                        Mi lista
-                    </button>
+                    <div className='movie-actions-top'>
+                        <button
+                            className="play-btn"
+                            onClick={() => console.log('Reproducir: ', movie.title)}
+                        >
+                            <i className="fa-solid fa-play"></i>
+                            Reproducir
+                        </button>
+                        <button
+                            className="add-btn"
+                            onClick={() => console.log('Agregar a mi lista: ', movie)}
+                        >
+                            <i className="fa-solid fa-plus"></i>
+                            Mi lista
+                        </button>
+                    </div>
+                    {/* Solo admins ven este botón */}
+                    {user?.role === "admin" && (
+                        <div className='movie-actions-bottom'>
+                            <button 
+                                className="btn btn-outline"
+                                onClick={() => console.log('Editar pelicula: ', movie)}
+                            >
+                                <i className="fa-solid fa-pen"></i>
+                                Editar
+                            </button>
+                            <button
+                                className="btn btn-danger"
+                                onClick={handleDelete}
+                            >
+                                <i className="fa-solid fa-trash"></i>
+                                Eliminar
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

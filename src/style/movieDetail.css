@@ -45,35 +45,95 @@
 
 .movie-actions {
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    /* apila top y bottom */
+    gap: 16px;
+    margin-top: 16px;
+}
+
+/* Fila superior (play + mi lista) */
+.movie-actions-top {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+/* Fila superior (play + mi lista) */
+.movie-actions-bottom {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
 }
 
 .play-btn,
-.add-btn {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
+.add-btn,
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     border: none;
+    border-radius: 8px;
+    padding: 10px 14px;
     cursor: pointer;
-    border-radius: 4px;
-    transition: 0.3s;
+    font-weight: 600;
+    transition: transform .15s ease, opacity .15s ease;
 }
 
 .play-btn {
-    background-color: #e50914;
-    color: white;
+    background: #e50914;
+    color: #fff;
 }
 
 .play-btn:hover {
-    background-color: #f40612;
+    transform: translateY(-1px);
 }
 
 .add-btn {
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
+    background: rgba(255, 255, 255, 0.12);
+    color: #fff;
 }
 
 .add-btn:hover {
-    background-color: rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
+}
+
+.btn {
+    background: rgba(255, 255, 255, 0.10);
+    color: #fff;
+}
+
+.btn:hover {
+    background: rgba(255, 255, 255, 0.16);
+    transform: translateY(-1px);
+}
+
+/* Variantes */
+.btn-danger {
+    background: #b91c1c;
+}
+
+.btn-danger:hover {
+    background: #dc2626;
+}
+
+.btn-outline {
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+.btn-outline:hover {
+    border-color: rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.06);
+}
+
+/* Iconos dentro del botón */
+.play-btn i,
+.add-btn i,
+.btn i {
+    display: inline-block;
 }
 
 /* Skeleton Loader */
