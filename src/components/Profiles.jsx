@@ -1,4 +1,4 @@
-import '../style/navbarIcons.css'
+import '../style/profiles.css'
 import { useRef, useState } from 'react'
 import { useOutsideClick } from '../hooks/useOutsideClick'
 
@@ -10,8 +10,8 @@ export const Profiles = () => {
     useOutsideClick([userIconRef, userMenuRef], () => setOpenUserMenu(false))
 
     const perfiles = [
-        { id: 1, name: "Fede" },
-        { id: 2, name: "Invitado" }
+        { id: 1, name: "Federico", role: 'admin' },
+        { id: 2, name: "Florencia", role: 'user' }
     ]
 
     return (

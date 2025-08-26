@@ -1,5 +1,5 @@
 import '../style/navbar.css'
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 import { NavbarIcons } from './NavbarIcons'
 
 export const Navbar = () => {
@@ -10,11 +10,36 @@ export const Navbar = () => {
             <div className='navbar-nav'>
                 <ul>
                     <div>
-                        <Link to={'/'}> <li> Inicio </li> </Link>
-                        <Link to={'/movies'}> <li> Peliculas </li> </Link>
-                        <Link to={'/series'}> <li> Series </li> </Link>
-                        <Link to={'/games'}> <li> Juegos </li> </Link>
-                        <Link to={'/mylist'}> <li> Mi lista </li> </Link>
+                        <NavLink 
+                            to={'/'}
+                            className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+                        > 
+                            <li> Inicio </li> 
+                        </NavLink>
+                        <NavLink 
+                        to={'/movies'}
+                        className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+                        > 
+                            <li> Peliculas </li> 
+                        </NavLink>
+                        <NavLink 
+                            to={'/series'}
+                            className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+                        > 
+                            <li> Series </li> 
+                        </NavLink>
+                        <NavLink 
+                            to={'/games'}
+                            className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+                        > 
+                        <li> Juegos </li> 
+                        </NavLink>
+                        <NavLink 
+                            to={'/mylist'}
+                            className={({ isActive }) => isActive ? "nav-item active" : "nav-item"}
+                        > 
+                            <li> Mi lista </li> 
+                        </NavLink>
                     </div>
                     <NavbarIcons />
                 </ul>

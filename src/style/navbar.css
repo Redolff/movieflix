@@ -54,28 +54,26 @@
 }
 
 /* items */
-.navbar-nav li {
-  cursor: pointer;
-  font-size: 14px;
-  color: #ddd;
-  transition: color .15s ease, transform .15s ease;
-  white-space: nowrap;
+.nav-item {
   text-decoration: none;
+  color: #ccc; /* color apagado por defecto */
+  font-weight: 500;
+  transition: color 0.3s, border-bottom 0.3s;
 }
 
-.navbar-nav li:hover {
-  color: #fff;
-  transform: translateY(-1px);
+.nav-item li {
+  list-style: none;
+  padding: 10px 15px;
 }
 
-/* “activo” de ejemplo para Inicio */
-.navbar-nav li:first-child {
-  font-weight: 600;
+.nav-item:hover {
+  color: #fff; /* al pasar el mouse */
 }
 
-/* separadores opcionales para acciones de la derecha */
-.navbar-nav>ul>div:last-child li {
-  opacity: .95;
+.nav-item.active {
+  color: #ffcc00; /* color destacado (ej: amarillo de Movieflix) */
+  font-weight: bold;
+  border-bottom: 2px solid #ffcc00; /* subrayado solo al activo */
 }
 
 /* tamaño de iconos */

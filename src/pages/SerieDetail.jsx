@@ -1,5 +1,5 @@
 import '../style/movieDetail.css'
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { useFetchId } from '../hooks/useFetchid'
 import { useDeleteData } from '../hooks/useDeleteData'
 
@@ -34,7 +34,9 @@ export const SerieDetail = () => {
             <h1>404 - Serie no encontrada</h1>
             <p>Parece que la serie que buscas no está en nuestra base de datos.
                 Verifica el nombre o vuelve a la página principal para seguir explorando.</p>
-            <a href="/">Volver al inicio</a>
+            <Link to="/" className="link-home">
+                Volver al inicio
+            </Link>
         </div>
     )
 
@@ -45,6 +47,7 @@ export const SerieDetail = () => {
                 <h1>{serie.title}</h1>
                 <p className="movie-year"><strong>Año:</strong> {serie.year}</p>
                 <p className="movie-director"><strong>Director:</strong> {serie.director}</p>
+                <p className="movie-genre"><strong>Genero:</strong> {serie.genre[0]}</p>
                 <p className="movie-duration"><strong>Temporadas:</strong> {serie.seasons} </p>
                 <p className="movie-duration"><strong>Episodios totales:</strong> {serie.episodes} </p>
                 <div className="movie-actions">

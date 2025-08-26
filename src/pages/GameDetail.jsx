@@ -1,5 +1,5 @@
 import '../style/movieDetail.css'
-import { useParams } from "react-router-dom"
+import { Link, useParams } from "react-router-dom"
 import { useFetchId } from "../hooks/useFetchid"
 import { useDeleteData } from '../hooks/useDeleteData'
 
@@ -8,10 +8,15 @@ export const GameDetail = () => {
     const { dataId: game, loading } = useFetchId("games", id)
     const { handleDelete } = useDeleteData("games", id)
 
+    const handleUpdate = (item) => {
+        console.log('Editar: ', item)
+    }
+
     const user = {
         name: 'Federico',
         role: 'admin'
     }
+    
 
     if (loading) {
         return (
@@ -33,7 +38,9 @@ export const GameDetail = () => {
             <h1>404 - Juego no encontrado</h1>
             <p>Parece que el juego que buscas no está en nuestra base de datos.
                 Verifica el nombre o vuelve a la página principal para seguir explorando.</p>
-            <a href="/">Volver al inicio</a>
+            <Link to="/" className="link-home">
+                Volver al inicio
+            </Link>
         </div>
     )
 
@@ -44,8 +51,8 @@ export const GameDetail = () => {
                 <h1>{game.title}</h1>
                 <p className="movie-year"><strong>Año:</strong> {game.year}</p>
                 <p className="movie-duration"><strong>Desarrollador:</strong> {game.developer} </p>
-                <p className="movie-director"><strong>Multijugador:</strong> {game.multiplayer === false ? 'No' : 'Si'}</p>
                 <p className="movie-duration"><strong>Genero:</strong> {game.genre[0]} </p>
+                <p className="movie-director"><strong>Multijugador:</strong> {game.multiplayer === false ? 'No' : 'Si'}</p>
                 <p className="movie-duration"><strong>Plataforma:</strong> {game.platform[0]} </p>
                 <div className="movie-actions">
                     <div className='movie-actions-top'>
@@ -69,7 +76,7 @@ export const GameDetail = () => {
                         <div className='movie-actions-bottom'>
                             <button
                                 className="btn btn-outline"
-                                onClick={() => console.log('Editar game: ', game)}
+                                onClick={(handleUpdate)}
                             >
                                 <i className="fa-solid fa-pen"></i>
                                 Editar

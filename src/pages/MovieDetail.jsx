@@ -3,15 +3,57 @@ import '../style/movieDetail.css'
 import { Link, useParams } from "react-router-dom"
 import { useFetchId } from '../hooks/useFetchid'
 import { useDeleteData } from '../hooks/useDeleteData'
+import { useState } from 'react'
 
 export const MovieDetail = () => {
     const { id } = useParams()
     const { dataId: movie, loading } = useFetchId("movies", id)
     const { handleDelete } = useDeleteData("movies", id)
+    const [isEditing, setIsEditing] = useState(false)
+    const [formData, setFormData] = useState(null)
 
     const user = {
         name: 'Federico',
         role: 'admin'
+    }
+
+    const handleEditClick = () => {
+        setFormData({ ...movie }) // Clonamos el juego actual
+        setIsEditing(true)
+    }
+
+    const handleCancel = () => {
+        setIsEditing(false)
+        setFormData(null)
+    }
+
+    const handleChange = (e) => {
+        const { name, value } = e.target
+        setFormData((prev) => ({ ...prev, [name]: value }))
+    }
+
+    const handleUpdate = async () => {
+        try {
+            const plainData = { ...formData }
+            if (typeof plainData.genre === "string") {
+                plainData.genre = plainData.genre.split(",").map(g => g.trim())
+            }
+
+            const response = await fetch(`http://localhost:3000/movies/${id}`, {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ plainData })
+            })
+            if (!response.ok) throw new Error("Error al actualizar la pelicula")
+            alert("Pelicula actualizada correctamente ✅")
+            setIsEditing(false)
+            window.location.reload() // refrescamos para ver cambios
+        } catch (error) {
+            console.error(error)
+            alert("Hubo un problema al actualizar ❌")
+        }
     }
 
     if (loading) {
@@ -44,11 +86,68 @@ export const MovieDetail = () => {
         <div key={movie.id} className="movie-detail">
             <img src={movie.poster} alt={movie.title} className="movie-detail-poster" />
             <div className="movie-detail-info">
-                <h1>{movie.title}</h1>
-                <p className="movie-year"><strong>Año:</strong> {movie.year}</p>
-                <p className="movie-director"><strong>Director:</strong> {movie.director}</p>
-                <p className="movie-duration"><strong>Duración:</strong> {movie.duration} min</p>
-                
+                {isEditing ? (
+                    <form className="edit-form">
+                        <div className="form-group">
+                            <label>Título</label>
+                            <input
+                                type="text"
+                                name="title"
+                                value={formData.title}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Año</label>
+                            <input
+                                type="number"
+                                name="year"
+                                value={formData.year}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Director</label>
+                            <input
+                                type="text"
+                                name="director"
+                                value={formData.director}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Género</label>
+                            <input
+                                type="text"
+                                name="genre"
+                                value={formData.genre}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+                        <div className="form-group">
+                            <label>Duración (min)</label>
+                            <input
+                                type="number"
+                                name="duration"
+                                value={formData.duration}
+                                onChange={handleChange}
+                                className="form-input"
+                            />
+                        </div>
+                    </form>
+                ) : (
+                    <>
+                        <h1>{movie.title}</h1>
+                        <p><strong>Año:</strong> {movie.year}</p>
+                        <p><strong>Director:</strong> {movie.director}</p>
+                        <p><strong>Genero:</strong> {movie.genre[0]}</p>
+                        <p><strong>Duracion:</strong> {movie.duration} min</p>
+                    </>
+                )}
                 <div className="movie-actions">
                     <div className='movie-actions-top'>
                         <button
@@ -69,20 +168,25 @@ export const MovieDetail = () => {
                     {/* Solo admins ven este botón */}
                     {user?.role === "admin" && (
                         <div className='movie-actions-bottom'>
-                            <button 
-                                className="btn btn-outline"
-                                onClick={() => console.log('Editar pelicula: ', movie)}
-                            >
-                                <i className="fa-solid fa-pen"></i>
-                                Editar
-                            </button>
-                            <button
-                                className="btn btn-danger"
-                                onClick={handleDelete}
-                            >
-                                <i className="fa-solid fa-trash"></i>
-                                Eliminar
-                            </button>
+                            {isEditing ? (
+                                <>
+                                    <button className="btn btn-success" onClick={handleUpdate}>
+                                        <i className="fa-solid fa-check"></i> Guardar
+                                    </button>
+                                    <button className="btn btn-outline" onClick={handleCancel}>
+                                        <i className="fa-solid fa-xmark"></i> Cancelar
+                                    </button>
+                                </>
+                            ) : (
+                                <>
+                                    <button className="btn btn-outline" onClick={handleEditClick}>
+                                        <i className="fa-solid fa-pen"></i> Editar
+                                    </button>
+                                    <button className="btn btn-danger" onClick={handleDelete}>
+                                        <i className="fa-solid fa-trash"></i> Eliminar
+                                    </button>
+                                </>
+                            )}
                         </div>
                     )}
                 </div>
