@@ -51,9 +51,9 @@ export const GameDetail = () => {
                 <h1>{game.title}</h1>
                 <p className="movie-year"><strong>Año:</strong> {game.year}</p>
                 <p className="movie-duration"><strong>Desarrollador:</strong> {game.developer} </p>
-                <p className="movie-duration"><strong>Genero:</strong> {game.genre[0]} </p>
+                <p className="movie-duration"><strong>Generos:</strong> {game.genre.join(", ")} </p>
                 <p className="movie-director"><strong>Multijugador:</strong> {game.multiplayer === false ? 'No' : 'Si'}</p>
-                <p className="movie-duration"><strong>Plataforma:</strong> {game.platform[0]} </p>
+                <p className="movie-duration"><strong>Plataformas:</strong> {game.platform.join(", ")} </p>
                 <div className="movie-actions">
                     <div className='movie-actions-top'>
                         <button

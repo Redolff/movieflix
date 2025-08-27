@@ -35,8 +35,22 @@ export const MovieDetail = () => {
     const handleUpdate = async () => {
         try {
             const plainData = { ...formData }
+
+            // Validación rápida antes de enviar
+            if (!plainData.title?.trim()) return alert("El título es obligatorio");
+            if (!plainData.year || plainData.year <= 0) return alert("El año es obligatorio y debe ser entre 1900 y 2026");
+            if (!plainData.director?.trim()) return alert("El director es obligatorio");
+            if (!plainData.duration || plainData.duration <= 0) return alert("La duración es obligatoria");
+            if (!plainData.genre || (Array.isArray(plainData.genre) && plainData.genre.length === 0) || plainData.genre === "") {
+                return alert("Debe ingresar al menos un género");
+            }
+
+            // Transformamos string a array si corresponde
             if (typeof plainData.genre === "string") {
-                plainData.genre = plainData.genre.split(",").map(g => g.trim())
+                plainData.genre = plainData.genre
+                    .split(",")
+                    .map(g => g.trim())
+                    .filter(Boolean) // elimina vacíos
             }
 
             const response = await fetch(`http://localhost:3000/movies/${id}`, {
@@ -44,9 +58,10 @@ export const MovieDetail = () => {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                body: JSON.stringify({ plainData })
+                body: JSON.stringify(plainData)
             })
             if (!response.ok) throw new Error("Error al actualizar la pelicula")
+
             alert("Pelicula actualizada correctamente ✅")
             setIsEditing(false)
             window.location.reload() // refrescamos para ver cambios
@@ -119,7 +134,7 @@ export const MovieDetail = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Género</label>
+                            <label>Géneros</label>
                             <input
                                 type="text"
                                 name="genre"
@@ -144,7 +159,7 @@ export const MovieDetail = () => {
                         <h1>{movie.title}</h1>
                         <p><strong>Año:</strong> {movie.year}</p>
                         <p><strong>Director:</strong> {movie.director}</p>
-                        <p><strong>Genero:</strong> {movie.genre[0]}</p>
+                        <p><strong>Generos:</strong> {movie.genre.join(", ")}</p>
                         <p><strong>Duracion:</strong> {movie.duration} min</p>
                     </>
                 )}

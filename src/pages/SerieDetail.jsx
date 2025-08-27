@@ -47,7 +47,7 @@ export const SerieDetail = () => {
                 <h1>{serie.title}</h1>
                 <p className="movie-year"><strong>Año:</strong> {serie.year}</p>
                 <p className="movie-director"><strong>Director:</strong> {serie.director}</p>
-                <p className="movie-genre"><strong>Genero:</strong> {serie.genre[0]}</p>
+                <p className="movie-genre"><strong>Generos:</strong> {serie.genre.join(", ")}</p>
                 <p className="movie-duration"><strong>Temporadas:</strong> {serie.seasons} </p>
                 <p className="movie-duration"><strong>Episodios totales:</strong> {serie.episodes} </p>
                 <div className="movie-actions">
