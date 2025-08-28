@@ -10,11 +10,13 @@ import { SerieDetail } from './pages/SerieDetail'
 import { Games } from './pages/Games'
 import { Mylist } from './pages/Mylist'
 import { GameDetail } from './pages/GameDetail'
+import { ToastContainer } from 'react-toastify'
 
 function App() {
 
   return (
     <Router>
+      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
       <Navbar />
       <Routes>
         <Route path='/' element={<Inicio />} />
