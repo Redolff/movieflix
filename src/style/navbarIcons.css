@@ -4,6 +4,7 @@
   gap: 10px;
   position: relative;
   margin-right: 30px;
+  cursor: pointer;
 }
 
 .search-input {

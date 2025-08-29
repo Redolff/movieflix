@@ -4,14 +4,17 @@ import { useFetchId } from '../hooks/useFetchid'
 import { useDeleteData } from '../hooks/useDeleteData'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { useUpdateData } from '../hooks/useUpdateData'
 
 export const MovieDetail = () => {
     const { id } = useParams()
     const { dataId: movie, loading } = useFetchId("movies", id)
     const { handleDelete } = useDeleteData("movies", id)
+    const { handleUpdate } = useUpdateData("movies", id)
     const [isEditing, setIsEditing] = useState(false)
     const [formData, setFormData] = useState(null)
     const [showTrailer, setShowTrailer] = useState(false)
+    const [showConfirmDelete, setShowConfirmDelete] = useState(false)
 
     const user = {
         name: 'Federico',
@@ -33,44 +36,31 @@ export const MovieDetail = () => {
         setFormData((prev) => ({ ...prev, [name]: value }))
     }
 
-    const handleUpdate = async () => {
-        try {
-            const plainData = { ...formData }
-
-            // Validación rápida antes de enviar
-            if (!plainData.title?.trim()) return alert("El título es obligatorio");
-            if (!plainData.year || plainData.year <= 0) return alert("El año es obligatorio y debe ser entre 1900 y 2026");
-            if (!plainData.director?.trim()) return alert("El director es obligatorio");
-            if (!plainData.duration || plainData.duration <= 0) return alert("La duración es obligatoria");
-            if (!plainData.genre || (Array.isArray(plainData.genre) && plainData.genre.length === 0) || plainData.genre === "") {
-                return alert("Debe ingresar al menos un género");
-            }
-
-            // Transformamos string a array si corresponde
-            if (typeof plainData.genre === "string") {
-                plainData.genre = plainData.genre
-                    .split(",")
-                    .map(g => g.trim())
-                    .filter(Boolean) // elimina vacíos
-            }
-
-            const response = await fetch(`http://localhost:3000/movies/${id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(plainData)
-            })
-            if (!response.ok) throw new Error("Error al actualizar la pelicula")
-
-            alert("Pelicula actualizada correctamente ✅")
-            setIsEditing(false)
-            window.location.reload() // refrescamos para ver cambios
-        } catch (error) {
-            console.error(error)
-            alert("Hubo un problema al actualizar ❌")
+    const handleSave = () => {
+        if (!formData.title?.trim()) return toast.warning("El título es obligatorio");
+        if (!formData.year || formData.year <= 0) return toast.warning("El año es obligatorio y debe ser entre 1900 y 2026");
+        if (!formData.director?.trim()) return toast.warning("El director es obligatorio");
+        if (!formData.duration || formData.duration <= 0) return toast.warning("La duración es obligatoria");
+        if (!formData.genre || (Array.isArray(formData.genre) && formData.genre.length === 0) || formData.genre === "") {
+            return toast.warning("Debe ingresar al menos un género");
         }
+        const plainData = { ...formData };
+        if (typeof plainData.genre === "string") {
+            plainData.genre = plainData.genre
+                .split(",")
+                .map((g) => g.trim())
+                .filter(Boolean);
+        }
+
+        handleUpdate(plainData, {
+            onSucces: (updatedMovie) => {
+                setFormData(null);
+                setIsEditing(false);
+                Object.assign(movie, updatedMovie);
+            },
+        });
     }
+
 
     const handleReproduce = () => {
         if (!movie.trailerUrl) {
@@ -99,7 +89,8 @@ export const MovieDetail = () => {
             <div className="icon">🎬</div>
             <h1>404 - Película no encontrada</h1>
             <p>Parece que la película que buscas no está en nuestra base de datos.
-                Verifica el nombre o vuelve a la página principal para seguir explorando.</p>
+                Verifica el nombre o vuelve a la página principal para seguir explorando.
+            </p>
             <Link to="/" className="link-home">
                 Volver al inicio
             </Link>
@@ -169,7 +160,7 @@ export const MovieDetail = () => {
                         <p><strong>Año:</strong> {movie.year}</p>
                         <p><strong>Director:</strong> {movie.director}</p>
                         <p><strong>Generos:</strong> {movie.genre.join(", ")}</p>
-                        <p><strong>Duracion:</strong> {movie.duration} min</p>
+                        <p><strong>Duracion:</strong> {movie.duration} (min)</p>
                     </>
                 )}
                 <div className="movie-actions">
@@ -214,7 +205,7 @@ export const MovieDetail = () => {
                         <div className='movie-actions-bottom'>
                             {isEditing ? (
                                 <>
-                                    <button className="btn btn-success" onClick={handleUpdate}>
+                                    <button className="btn btn-success" onClick={handleSave}>
                                         <i className="fa-solid fa-check"></i> Guardar
                                     </button>
                                     <button className="btn btn-outline" onClick={handleCancel}>
@@ -226,7 +217,7 @@ export const MovieDetail = () => {
                                     <button className="btn btn-outline" onClick={handleEditClick}>
                                         <i className="fa-solid fa-pen"></i> Editar
                                     </button>
-                                    <button className="btn btn-danger" onClick={handleDelete}>
+                                    <button className="btn btn-danger" onClick={() => setShowConfirmDelete(true)}>
                                         <i className="fa-solid fa-trash"></i> Eliminar
                                     </button>
                                 </>
@@ -235,6 +226,18 @@ export const MovieDetail = () => {
                     )}
                 </div>
             </div>
+
+            {showConfirmDelete && (
+                <div className="modal-overlay" onClick={() => setShowConfirmDelete(false)}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <h2>¿Seguro que deseas eliminar esta película?</h2>
+                        <div className="modal-actions">
+                            <button className="btn btn-danger" onClick={handleDelete}>Sí, eliminar</button>
+                            <button className="btn btn-outline" onClick={() => setShowConfirmDelete(false)}>Cancelar</button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     )
 }

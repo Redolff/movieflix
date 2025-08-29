@@ -304,3 +304,10 @@
   max-width: 800px;
   width: 90%;
 }
+
+/* MODAL DELETE */
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+}

@@ -58,10 +58,10 @@ export const GameDetail = () => {
                     <div className='movie-actions-top'>
                         <button
                             className="play-btn"
-                            onClick={() => console.log('Reproducir: ', game.title)}
+                            onClick={() => console.log('Jugar: ', game.title)}
                         >
                             <i className="fa-solid fa-play"></i>
-                            Reproducir
+                            Jugar
                         </button>
                         <button
                             className="add-btn"

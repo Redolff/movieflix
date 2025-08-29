@@ -11,15 +11,17 @@ import { Games } from './pages/Games'
 import { Mylist } from './pages/Mylist'
 import { GameDetail } from './pages/GameDetail'
 import { ToastContainer } from 'react-toastify'
+import { useState } from 'react'
 
 function App() {
+  const [query, setQuery] = useState("")
 
   return (
     <Router>
       <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
-      <Navbar />
+      <Navbar query={query} setQuery={setQuery} />
       <Routes>
-        <Route path='/' element={<Inicio />} />
+        <Route path='/' element={<Inicio query={query} />} />
         <Route path='/movies' element={<Movies />} />
         <Route path='/movies/:id' element={ <MovieDetail /> } />
         <Route path='/series' element={<Series />} />

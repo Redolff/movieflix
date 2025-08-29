@@ -1,16 +1,14 @@
 import '../style/navbarIcons.css'
 import { useState } from 'react'
 
-export const Searcher = () => {
+export const Searcher = ({ query, setQuery }) => {
     const [showSearch, setShowSearch] = useState(false)
-    const [query, setQuery] = useState("")
 
     const handleSearchClick = () => setShowSearch(!showSearch)
 
     const handleInputChange = (e) => {
         e.preventDefault()
         const value = e.target.value
-        console.log(value)
         setQuery(value)
     }
 

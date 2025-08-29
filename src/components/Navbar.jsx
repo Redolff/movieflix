@@ -2,7 +2,7 @@ import '../style/navbar.css'
 import { NavLink } from 'react-router-dom'
 import { NavbarIcons } from './NavbarIcons'
 
-export const Navbar = () => {
+export const Navbar = ({ query, setQuery }) => {
 
     return (
         <>
@@ -41,7 +41,7 @@ export const Navbar = () => {
                             <li> Mi lista </li> 
                         </NavLink>
                     </div>
-                    <NavbarIcons />
+                    <NavbarIcons query={query} setQuery={setQuery} />
                 </ul>
             </div>
         </>

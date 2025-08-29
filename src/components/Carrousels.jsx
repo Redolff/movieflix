@@ -25,7 +25,10 @@ export const Carrousels = ({ title, items, renderItem }) => {
                 </button>
 
                 <section className="movies-row" ref={rowRef}>
-                    {items.map((item) => renderItem(item))}
+                    {items.length > 0 
+                        ? items.map((item) => renderItem(item))
+                        : <p style={{ padding: "1rem" }}> ❌ No se encontraron resultados </p>
+                    }
                 </section>
 
                 <button
