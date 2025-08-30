@@ -1,18 +1,11 @@
 import '../style/movieDetail.css'
 import { Link, useParams } from "react-router-dom"
 import { useFetchId } from '../hooks/useFetchid'
-import { useDeleteData } from '../hooks/useDeleteData'
+import { SerieActions } from '../components/series/SerieActions'
 
 export const SerieDetail = () => {
     const { id } = useParams()
     const { dataId: serie, loading } = useFetchId("series", id)
-    const { handleDelete } = useDeleteData("series", id)
-
-    // USER --> AUTHENTICACION
-    const user = {
-        name: 'Federico',
-        role: 'admin'
-    }
 
     if (loading) {
         return (
@@ -40,6 +33,8 @@ export const SerieDetail = () => {
         </div>
     )
 
+    
+
     return (
         <div key={serie.id} className="movie-detail">
             <img src={serie.poster} alt={serie.title} className="movie-detail-poster" />
@@ -50,43 +45,8 @@ export const SerieDetail = () => {
                 <p className="movie-genre"><strong>Generos:</strong> {serie.genre.join(", ")}</p>
                 <p className="movie-duration"><strong>Temporadas:</strong> {serie.seasons} </p>
                 <p className="movie-duration"><strong>Episodios totales:</strong> {serie.episodes} </p>
-                <div className="movie-actions">
-                    <div className='movie-actions-top'>
-                        <button
-                            className="play-btn"
-                            onClick={() => console.log('Reproducir: ', serie.title)}
-                        >
-                            <i className="fa-solid fa-play"></i>
-                            Reproducir
-                        </button>
-                        <button
-                            className="add-btn"
-                            onClick={() => console.log('Agregar a mi lista: ', serie)}
-                        >
-                            <i className="fa-solid fa-plus"></i>
-                            Mi lista
-                        </button>
-                    </div>
-                    {/* Solo admins ven este botón */}
-                    {user?.role === "admin" && (
-                        <div className='movie-actions-bottom'>
-                            <button
-                                className="btn btn-outline"
-                                onClick={() => console.log('Editar serie: ', serie)}
-                            >
-                                <i className="fa-solid fa-pen"></i>
-                                Editar
-                            </button>
-                            <button
-                                className="btn btn-danger"
-                                onClick={(handleDelete)}
-                            >
-                                <i className="fa-solid fa-trash"></i>
-                                Eliminar
-                            </button>
-                        </div>
-                    )}
-                </div>
+
+                <SerieActions serie={serie} id={id} />
             </div>
         </div>
     )

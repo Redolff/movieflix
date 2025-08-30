@@ -1,6 +1,6 @@
-import '../style/profiles.css'
+import '../../style/profiles.css'
 import { useRef, useState } from 'react'
-import { useOutsideClick } from '../hooks/useOutsideClick'
+import { useOutsideClick } from '../../hooks/useOutsideClick'
 
 export const Profiles = () => {
     const [openUserMenu, setOpenUserMenu] = useState(false)

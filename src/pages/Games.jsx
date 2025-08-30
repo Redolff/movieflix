@@ -1,4 +1,4 @@
-import { Game } from "../components/Game"
+import { Game } from "../components/games/Game"
 import { useFetchData } from "../hooks/useFetchData"
 import { Carrousels } from "../components/Carrousels"
 

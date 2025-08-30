@@ -1,4 +1,4 @@
-import '../style/movies.css'
+import '../../style/movies.css'
 import { useNavigate } from "react-router-dom"
 
 export const Game = ({ game }) => {

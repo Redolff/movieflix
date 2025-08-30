@@ -1,7 +1,7 @@
 import { Carrousels } from "../components/Carrousels"
-import { Game } from "../components/Game"
-import { Movie } from "../components/Movie"
-import { Serie } from "../components/Serie"
+import { Game } from "../components/games/Game"
+import { Movie } from "../components/movies/Movie"
+import { Serie } from "../components/series/Serie"
 import { useFetchData } from "../hooks/useFetchData"
 
 export const Inicio = ({ query }) => {

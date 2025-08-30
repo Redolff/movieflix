@@ -1,4 +1,4 @@
-import '../style/navbar.css'
+import '../../style/navbar.css'
 import { NavLink } from 'react-router-dom'
 import { NavbarIcons } from './NavbarIcons'
 

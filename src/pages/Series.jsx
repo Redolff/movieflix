@@ -1,6 +1,6 @@
 import '../style/movies.css'
 import { useFetchData } from "../hooks/useFetchData";
-import { Serie } from "../components/Serie";
+import { Serie } from "../components/series/Serie";
 import { Carrousels } from '../components/Carrousels';
 
 export const Series = () => {

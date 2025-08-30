@@ -1,7 +1,7 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 
-import { Navbar } from './components/Navbar'
+import { Navbar } from './components/navbar/Navbar'
 import { Inicio } from './pages/Inicio'
 import { Movies } from './pages/Movies'
 import { MovieDetail } from './pages/MovieDetail'

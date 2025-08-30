@@ -1,5 +1,5 @@
-import '../style/navbarIcons.css'
-import { Notifications } from './Notifications'
+import '../../style/navbarIcons.css'
+import { Notifications } from './/Notifications'
 import { Profiles } from './Profiles'
 import { Searcher } from './Searcher'
 

@@ -1,22 +1,11 @@
 import '../style/movieDetail.css'
 import { Link, useParams } from "react-router-dom"
 import { useFetchId } from "../hooks/useFetchid"
-import { useDeleteData } from '../hooks/useDeleteData'
+import { GameActions } from '../components/games/GameActions'
 
 export const GameDetail = () => {
     const { id } = useParams()
     const { dataId: game, loading } = useFetchId("games", id)
-    const { handleDelete } = useDeleteData("games", id)
-
-    const handleUpdate = (item) => {
-        console.log('Editar: ', item)
-    }
-
-    const user = {
-        name: 'Federico',
-        role: 'admin'
-    }
-    
 
     if (loading) {
         return (
@@ -54,43 +43,7 @@ export const GameDetail = () => {
                 <p className="movie-duration"><strong>Generos:</strong> {game.genre.join(", ")} </p>
                 <p className="movie-director"><strong>Multijugador:</strong> {game.multiplayer === false ? 'No' : 'Si'}</p>
                 <p className="movie-duration"><strong>Plataformas:</strong> {game.platform.join(", ")} </p>
-                <div className="movie-actions">
-                    <div className='movie-actions-top'>
-                        <button
-                            className="play-btn"
-                            onClick={() => console.log('Jugar: ', game.title)}
-                        >
-                            <i className="fa-solid fa-play"></i>
-                            Jugar
-                        </button>
-                        <button
-                            className="add-btn"
-                            onClick={() => console.log('Agregar a mi lista: ', game)}
-                        >
-                            <i className="fa-solid fa-plus"></i>
-                            Mi lista
-                        </button>
-                    </div>
-                    {/* Solo admins ven este botón */}
-                    {user?.role === "admin" && (
-                        <div className='movie-actions-bottom'>
-                            <button
-                                className="btn btn-outline"
-                                onClick={(handleUpdate)}
-                            >
-                                <i className="fa-solid fa-pen"></i>
-                                Editar
-                            </button>
-                            <button
-                                className="btn btn-danger"
-                                onClick={(handleDelete)}
-                            >
-                                <i className="fa-solid fa-trash"></i>
-                                Eliminar
-                            </button>
-                        </div>
-                    )}
-                </div>
+                <GameActions game={game} id={id} />
             </div>
         </div>
     )

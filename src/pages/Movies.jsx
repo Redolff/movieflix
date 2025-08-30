@@ -1,7 +1,7 @@
 import '../style/movies.css'
 import { Carrousels } from "../components/Carrousels"
 import { useFetchData } from '../hooks/useFetchData'
-import { Movie } from '../components/Movie'
+import { Movie } from '../components/movies/Movie'
 
 export const Movies = () => {
     const { data: allMovies } = useFetchData("movies")

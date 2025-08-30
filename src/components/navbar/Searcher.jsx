@@ -1,4 +1,4 @@
-import '../style/navbarIcons.css'
+import '../../style/navbarIcons.css'
 import { useState } from 'react'
 
 export const Searcher = ({ query, setQuery }) => {
