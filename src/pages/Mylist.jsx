@@ -62,6 +62,8 @@ export const Mylist = () => {
     const series = myList.filter(item => item.resource === "serie")
     const games = myList.filter(item => item.resource === "game")
 
+    console.log('MI LISTA: ', myList)
+
     return (
         <div className="container-my-list">
             <Carrousels

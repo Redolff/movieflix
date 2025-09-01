@@ -155,7 +155,7 @@ export const MovieDetail = () => {
                     </>
                 )}
                 <div className="movie-actions">
-                    <MovieActions movie={movie} id={id} />
+                    <MovieActions movie={movie}/>
                     {/* Solo admins ven este botón */}
                     {user?.role === "admin" && (
                         <div className='movie-actions-bottom'>

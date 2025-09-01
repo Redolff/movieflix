@@ -4,6 +4,7 @@ import { useOutsideClick } from '../../hooks/useOutsideClick'
 
 export const Profiles = () => {
     const [openUserMenu, setOpenUserMenu] = useState(false)
+    const [perfil, setPerfil] = useState("")
     const userIconRef = useRef(null)
     const userMenuRef = useRef(null)
 
