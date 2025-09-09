@@ -12,6 +12,9 @@ import { Mylist } from './pages/Mylist'
 import { GameDetail } from './pages/GameDetail'
 import { ToastContainer } from 'react-toastify'
 import { useState } from 'react'
+import { AdminLayout } from './pages/admin/AdminLayout'
+import { Dashboard } from './pages/admin/Dashboard'
+import { MoviesAdmin } from './pages/admin/MoviesAdmin'
 
 function App() {
   const [query, setQuery] = useState("")
@@ -22,13 +25,23 @@ function App() {
       <Navbar query={query} setQuery={setQuery} />
       <Routes>
         <Route path='/' element={<Inicio query={query} />} />
+
+        <Route path='/admin' element={<AdminLayout /> }>
+          <Route index element={<Dashboard />} />
+          <Route path='movies' element={ <MoviesAdmin /> } />
+        </Route>
+
         <Route path='/movies' element={<Movies />} />
         <Route path='/movies/:id' element={ <MovieDetail /> } />
+
         <Route path='/series' element={<Series />} />
         <Route path='/series/:id' element={<SerieDetail />} />
+
         <Route path='/games' element={<Games />} />
         <Route path='/games/:id' element={<GameDetail />} />
+
         <Route path='/mylist' element={<Mylist />} />
+
         <Route path='*' element={ <Navigate to={'/'} /> } />
 
       </Routes>

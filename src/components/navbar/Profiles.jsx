@@ -1,6 +1,7 @@
 import '../../style/profiles.css'
 import { useRef, useState } from 'react'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
+import { NavLink } from 'react-router-dom'
 
 export const Profiles = () => {
     const [openUserMenu, setOpenUserMenu] = useState(false)
@@ -30,7 +31,11 @@ export const Profiles = () => {
                         </div>
                     ))}
                     <hr />
-                    <div className="user-item">Administrar perfiles</div>
+                    <NavLink 
+                        to={'/admin'} 
+                    >  
+                        <div className='user-item'> Administrar </div>
+                    </NavLink>
                     <div className="user-item">Cuenta</div>
                     <hr />
                     <div className="user-item logout">Cerrar sesión</div>
