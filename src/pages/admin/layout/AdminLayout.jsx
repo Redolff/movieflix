@@ -1,6 +1,6 @@
 import { Outlet, NavLink } from "react-router-dom";
 import { Film, Tv, Gamepad2, Users, LayoutDashboard } from "lucide-react";
-import "./AdminLayout.css";
+import "./adminLayout.css";
 
 export const AdminLayout = () => {
     return (

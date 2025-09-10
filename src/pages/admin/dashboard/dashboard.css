@@ -1,0 +1,55 @@
+/* Contenedor principal */
+.dashboard-container {
+  padding: 2rem;
+  background-color: #141414; /* estilo Netflix */
+  min-height: 100vh;
+  color: #fff;
+  font-family: "Arial", sans-serif;
+}
+
+/* Título */
+.dashboard-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  color: #e50914; /* rojo Netflix */
+  text-align: center;
+}
+
+/* Grid de tarjetas */
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Tarjetas */
+.dashboard-card {
+  display: block;
+  background: #1f1f1f;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-decoration: none; /* sin subrayado */
+  color: #fff;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* Hover en tarjetas */
+.dashboard-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(229, 9, 20, 0.6);
+}
+
+/* Título de la tarjeta */
+.dashboard-card h2 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: #e5e5e5;
+}
+
+/* Texto de la tarjeta */
+.dashboard-card p {
+  font-size: 0.95rem;
+  color: #b3b3b3;
+}

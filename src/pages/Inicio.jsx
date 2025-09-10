@@ -17,17 +17,17 @@ export const Inicio = ({ query }) => {
     return (
         <>
             <Carrousels 
-                title={`Todas las películas`} 
+                title={`Todas las películas 🎬`} 
                 items={filteredMovies} 
                 renderItem={(allMovies) => <Movie movie={allMovies} key={allMovies.id} />}
             />
             <Carrousels 
-                title={`Todas las series`} 
+                title={`Todas las series 📺`} 
                 items={filteredSeries} 
                 renderItem={(allSeries) => <Serie serie={allSeries} key={allSeries.id} />}
             />
             <Carrousels 
-                title={`Todos los juegos`} 
+                title={`Todos los juegos 🎮`} 
                 items={filteredGames} 
                 renderItem={(allGames) => <Game game={allGames} key={allGames.id} />}
             />
