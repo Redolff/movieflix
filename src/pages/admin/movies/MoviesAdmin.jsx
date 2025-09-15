@@ -5,8 +5,8 @@ import { CreateMovieForm } from "./CreateMovieForm"
 import { useFetchData } from "../../../hooks/useFetchData"
 
 export const MoviesAdmin = () => {
-  const [showForm, setShowForm] = useState(false);
   const { data: allMovies } = useFetchData("movies");
+  const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
 
   const handleSuccess = () => {

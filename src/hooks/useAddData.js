@@ -12,7 +12,6 @@ export const useAddData = (resource) => {
             })
             if(!response.ok) throw new Error(`Error al agregar la ${resource}`)
             const newItem = await response.json()
-            console.log('newItem: ', newItem)
             onSuccess?.(newItem)
 
         }catch(err){

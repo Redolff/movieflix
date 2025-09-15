@@ -65,7 +65,7 @@ export const CreateMovieForm = ({ onSuccess }) => {
 
     handleAdd(newMovie, {
       onSuccess: () => {
-        toast.success("✅ Película creada con éxito");
+        toast.success("Película creada con éxito ✅");
         setFormData({
           title: "",
           year: "",

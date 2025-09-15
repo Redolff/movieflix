@@ -2,16 +2,16 @@ import "../movies/moviesAdmin.css"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useFetchData } from "../../../hooks/useFetchData"
-import { toast } from "react-toastify"
+import { CreateGameForm } from "./CreateGameForm";
 
 export const GamesAdmin = () => {
-  const [showForm, setShowForm] = useState(false);
   const { data: allGames } = useFetchData("games");
+  const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
 
   const handleSuccess = () => {
-    toast.success("✅ Juego agregada correctamente");
-    navigate("/movies"); // redirige al listado general
+    setShowForm(false)
+    navigate("/games")
   };
 
   return (
@@ -41,7 +41,7 @@ export const GamesAdmin = () => {
       {showForm && (
         <div className="form-modal-overlay" onClick={() => setShowForm(false)}>
           <div className="form-modal-content" onClick={e => e.stopPropagation()}>
-            { /* <CreateMovieForm onSuccess={() => setShowForm(false)} /> */}
+            <CreateGameForm onSuccess={handleSuccess} />
           </div>
         </div>
       )}

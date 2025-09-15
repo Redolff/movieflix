@@ -2,16 +2,16 @@ import "../movies/moviesAdmin.css"
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { useFetchData } from "../../../hooks/useFetchData"
-import { toast } from "react-toastify"
+import { CreateSerieForm } from "./CreateSerieForm"
 
 export const SeriesAdmin = () => {
-    const [showForm, setShowForm] = useState(false);
     const { data: allSeries } = useFetchData("series");
+    const [showForm, setShowForm] = useState(false);
     const navigate = useNavigate();
 
     const handleSuccess = () => {
-        toast.success("✅ Serie agregada correctamente");
-        navigate("/movies"); // redirige al listado general
+        setShowForm(false)
+        navigate("/series")
     };
 
     return (
@@ -41,7 +41,7 @@ export const SeriesAdmin = () => {
             {showForm && (
                 <div className="form-modal-overlay" onClick={() => setShowForm(false)}>
                     <div className="form-modal-content" onClick={e => e.stopPropagation()}>
-                        {/* <CreateMovieForm onSuccess={() => setShowForm(false)} /> */}
+                        {<CreateSerieForm onSuccess={handleSuccess} />}
                     </div>
                 </div>
             )}
