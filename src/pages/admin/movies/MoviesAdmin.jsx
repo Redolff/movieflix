@@ -3,7 +3,6 @@ import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { CreateMovieForm } from "./CreateMovieForm"
 import { useFetchData } from "../../../hooks/useFetchData"
-import { toast } from "react-toastify"
 
 export const MoviesAdmin = () => {
   const [showForm, setShowForm] = useState(false);
