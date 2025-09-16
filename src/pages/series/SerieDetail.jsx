@@ -1,11 +1,12 @@
-import '../style/movieDetail.css'
+import '../../style/movieDetail.css'
 import { Link, useParams } from "react-router-dom"
-import { useFetchId } from '../hooks/useFetchid'
-import { SerieActions } from '../components/series/SerieActions'
+import { useFetchId } from '../../hooks/useFetchid'
+import { SerieActions } from '../../components/series/SerieActions'
 import { useState } from 'react'
-import { useDeleteData } from '../hooks/useDeleteData'
+import { useDeleteData } from '../../hooks/useDeleteData'
 import { toast } from 'react-toastify'
-import { useUpdateData } from '../hooks/useUpdateData'
+import { useUpdateData } from '../../hooks/useUpdateData'
+import { useAuth } from '../../context/AuthContext'
 
 export const SerieDetail = () => {
     const { id } = useParams()
@@ -15,7 +16,7 @@ export const SerieDetail = () => {
     const [showConfirmDelete, setShowConfirmDelete] = useState(false)
     const { handleDelete } = useDeleteData("series", id)
     const { handleUpdate } = useUpdateData("series", id)
-    
+    const { isAuthenticated } = useAuth()
 
     const user = {
         name: 'Federico',
@@ -171,7 +172,7 @@ export const SerieDetail = () => {
                 <div className="movie-actions">
                     <SerieActions serie={serie} />
                     {/* Solo admins ven este botón */}
-                    {user?.role === "admin" && (
+                    {isAuthenticated?.role === "admin" && (
                         <div className='movie-actions-bottom'>
                             {isEditing ? (
                                 <>

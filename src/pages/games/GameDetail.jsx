@@ -1,20 +1,22 @@
-import '../style/movieDetail.css'
+import '../../style/movieDetail.css'
 import { Link, useParams } from "react-router-dom"
-import { useFetchId } from '../hooks/useFetchid'
-import { useDeleteData } from '../hooks/useDeleteData'
+import { useFetchId } from "../../hooks/useFetchid"
+import { GameActions } from '../../components/games/GameActions'
 import { useState } from 'react'
+import { useDeleteData } from '../../hooks/useDeleteData'
+import { useUpdateData } from '../../hooks/useUpdateData'
 import { toast } from 'react-toastify'
-import { useUpdateData } from '../hooks/useUpdateData'
-import { MovieActions } from '../components/movies/MovieActions'
+import { useAuth } from '../../context/AuthContext'
 
-export const MovieDetail = () => {
+export const GameDetail = () => {
     const { id } = useParams()
-    const { dataId: movie, loading } = useFetchId("movies", id)
-    const { handleDelete } = useDeleteData("movies", id)
-    const { handleUpdate } = useUpdateData("movies", id)
+    const { dataId: game, loading } = useFetchId("games", id)
     const [isEditing, setIsEditing] = useState(false)
     const [formData, setFormData] = useState(null)
     const [showConfirmDelete, setShowConfirmDelete] = useState(false)
+    const { handleDelete } = useDeleteData("games", id)
+    const { handleUpdate } = useUpdateData("games", id)
+    const { isAuthenticated } = useAuth()
 
     const user = {
         name: 'Federico',
@@ -22,7 +24,7 @@ export const MovieDetail = () => {
     }
 
     const handleEditClick = () => {
-        setFormData({ ...movie }) // Clonamos el juego actual
+        setFormData({ ...game }) // Clonamos el juego actual
         setIsEditing(true)
     }
 
@@ -39,10 +41,14 @@ export const MovieDetail = () => {
     const handleSave = () => {
         if (!formData.title?.trim()) return toast.warning("El título es obligatorio");
         if (!formData.year || formData.year <= 0) return toast.warning("El año es obligatorio y debe ser entre 1900 y 2026");
-        if (!formData.director?.trim()) return toast.warning("El director es obligatorio");
-        if (!formData.duration || formData.duration <= 0) return toast.warning("La duración es obligatoria");
+        if (!formData.developer?.trim()) return toast.warning("El desarrollador es obligatorio");
         if (!formData.genre || (Array.isArray(formData.genre) && formData.genre.length === 0) || formData.genre === "") {
             return toast.warning("Debe ingresar al menos un género");
+        }
+        if (formData.multiplayer === undefined || formData.multiplayer === null) {
+            return toast.warning("Decidir si es multijugador es obligatorio");
+        } if (!formData.platform || (Array.isArray(formData.platform) && formData.platform.length === 0) || formData.platform === "") {
+            return toast.warning("Debe ingresar al menos una plataforma");
         }
         const plainData = { ...formData };
         if (typeof plainData.genre === "string") {
@@ -51,12 +57,18 @@ export const MovieDetail = () => {
                 .map((g) => g.trim())
                 .filter(Boolean);
         }
+        if (typeof plainData.platforms === "string") {
+            plainData.platforms = plainData.platforms
+                .split(",")
+                .map((g) => g.trim())
+                .filter(Boolean);
+        }
 
         handleUpdate(plainData, {
-            onSucces: (updatedMovie) => {
+            onSucces: (updatedGame) => {
                 setFormData(null);
                 setIsEditing(false);
-                Object.assign(movie, updatedMovie);
+                Object.assign(game, updatedGame);
             },
         });
     }
@@ -75,13 +87,12 @@ export const MovieDetail = () => {
         )
     }
 
-    if (!movie) return (
+    if (!game) return (
         <div className="container">
             <div className="icon">🎬</div>
-            <h1>404 - Película no encontrada</h1>
-            <p>Parece que la película que buscas no está en nuestra base de datos.
-                Verifica el nombre o vuelve a la página principal para seguir explorando.
-            </p>
+            <h1>404 - Juego no encontrado</h1>
+            <p>Parece que el juego que buscas no está en nuestra base de datos.
+                Verifica el nombre o vuelve a la página principal para seguir explorando.</p>
             <Link to="/" className="link-home">
                 Volver al inicio
             </Link>
@@ -89,13 +100,14 @@ export const MovieDetail = () => {
     )
 
     return (
-        <div key={movie.id} className="movie-detail">
-            <img src={movie.poster} alt={movie.title} className="movie-detail-poster" />
+        <div key={game.id} className="movie-detail">
+            <img src={game.poster} alt={game.title} className="movie-detail-poster" />
             <div className="movie-detail-info">
+
                 {isEditing ? (
                     <form className="edit-form">
                         <div className="form-group">
-                            <label>Título</label>
+                            <label>Title</label>
                             <input
                                 type="text"
                                 name="title"
@@ -115,11 +127,11 @@ export const MovieDetail = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Director</label>
+                            <label>Desarrollador</label>
                             <input
                                 type="text"
-                                name="director"
-                                value={formData.director}
+                                name="developer"
+                                value={formData.developer}
                                 onChange={handleChange}
                                 className="form-input"
                             />
@@ -135,11 +147,41 @@ export const MovieDetail = () => {
                             />
                         </div>
                         <div className="form-group">
-                            <label>Duración (min)</label>
+                            <label>¿Es multijugador?</label>
+                            <div>
+                                <label>
+                                    <input
+                                        type="radio"
+                                        name="multiplayer"
+                                        value="true"
+                                        checked={formData.multiplayer === true || formData.multiplayer === "true"}
+                                        onChange={() =>
+                                            setFormData((prev) => ({ ...prev, multiplayer: true }))
+                                        }
+                                    />
+                                    Sí
+                                </label>
+                                <label style={{ marginLeft: "1rem" }}>
+                                    <input
+                                        type="radio"
+                                        name="multiplayer"
+                                        value="false"
+                                        checked={formData.multiplayer === false || formData.multiplayer === "false"}
+                                        onChange={() =>
+                                            setFormData((prev) => ({ ...prev, multiplayer: false }))
+                                        }
+                                    />
+                                    No
+                                </label>
+                            </div>
+
+                        </div>
+                        <div className="form-group">
+                            <label>Plataformas</label>
                             <input
-                                type="number"
-                                name="duration"
-                                value={formData.duration}
+                                type="text"
+                                name="platform"
+                                value={formData.platform}
                                 onChange={handleChange}
                                 className="form-input"
                             />
@@ -147,17 +189,18 @@ export const MovieDetail = () => {
                     </form>
                 ) : (
                     <>
-                        <h1>{movie.title}</h1>
-                        <p><strong>Año:</strong> {movie.year}</p>
-                        <p><strong>Director:</strong> {movie.director}</p>
-                        <p><strong>Generos:</strong> {movie.genre.join(", ")}</p>
-                        <p><strong>Duracion:</strong> {movie.duration} (min)</p>
+                        <h1>{game.title}</h1>
+                        <p className="movie-year"><strong>Año:</strong> {game.year}</p>
+                        <p className="movie-duration"><strong>Desarrollador:</strong> {game.developer} </p>
+                        <p className="movie-duration"><strong>Generos:</strong> {game.genre.join(", ")} </p>
+                        <p className="movie-director"><strong>Multijugador:</strong> {game.multiplayer === false ? 'No' : 'Si'}</p>
+                        <p className="movie-duration"><strong>Plataformas:</strong> {game.platform.join(", ")} </p>
                     </>
                 )}
-                <div className="movie-actions">
-                    <MovieActions movie={movie}/>
+                <div className='movie-actions'>
+                    <GameActions game={game} />
                     {/* Solo admins ven este botón */}
-                    {user?.role === "admin" && (
+                    {isAuthenticated.role === "admin" && (
                         <div className='movie-actions-bottom'>
                             {isEditing ? (
                                 <>
@@ -182,7 +225,6 @@ export const MovieDetail = () => {
                     )}
                 </div>
             </div>
-
             {showConfirmDelete && (
                 <div className="modal-overlay" onClick={() => setShowConfirmDelete(false)}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>

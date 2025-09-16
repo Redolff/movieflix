@@ -1,6 +1,6 @@
-import { Game } from "../components/games/Game"
-import { useFetchData } from "../hooks/useFetchData"
-import { Carrousels } from "../components/Carrousels"
+import { Game } from "../../components/games/Game"
+import { useFetchData } from "../../hooks/useFetchData"
+import { Carrousels } from "../../components/Carrousels"
 
 export const Games = () => {
     const { data: allGames } = useFetchData("games")

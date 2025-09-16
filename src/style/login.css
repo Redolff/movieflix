@@ -1,0 +1,91 @@
+/* Contenedor general */
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #000; /* gris oscuro */
+  padding: 1rem;
+}
+
+/* Card principal */
+.login-card {
+  background-color: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+/* Título */
+.login-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Formulario */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+/* Inputs */
+.login-input {
+  border: 1px solid #ccc;
+  padding: 0.75rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.login-input:focus {
+  border-color: #facc15; /* Amarillo */
+}
+
+/* Botón principal */
+.login-button {
+  background-color: #facc15; /* Amarillo Meli */
+  color: #000;
+  font-weight: bold;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.login-button:hover {
+  background-color: #eab308; /* Amarillo un poco más oscuro */
+}
+
+/* Sección de Google */
+.login-google {
+  margin-top: 1rem;
+}
+
+.login-divider {
+  color: #888;
+  margin: 0.5rem 0;
+}
+
+/* Botón Google */
+.google-button {
+  background-color: #ef4444;
+  color: #fff;
+  font-weight: bold;
+  padding: 0.75rem;
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.google-button:hover {
+  background-color: #dc2626;
+}

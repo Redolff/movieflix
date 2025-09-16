@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import { useAuth } from "../../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 export const MovieActions = ({ movie }) => {
     const [showTrailer, setShowTrailer] = useState(false)
+    const { isAuthenticated } = useAuth()
+    const navigate = useNavigate()
 
     const handleReproduce = () => {
         if (!movie.trailerUrl) {
@@ -14,13 +18,26 @@ export const MovieActions = ({ movie }) => {
 
     return (
         <div className='movie-actions-top'>
-            <button
-                className="play-btn"
-                onClick={(handleReproduce)}
-            >
-                <i className="fa-solid fa-play"></i>
-                Reproducir
-            </button>
+            {isAuthenticated
+                ? (
+                    <button
+                        className="play-btn"
+                        onClick={(handleReproduce)}
+                    >
+                        <i className="fa-solid fa-play"></i>
+                        Reproducir
+                    </button>
+                ) :
+                (
+                    <button
+                        className="play-btn"
+                        onClick={() => navigate('/login')}
+                    >
+                        <i className="fa-solid fa-play"></i>
+                        Iniciar sesion para reproducir
+                    </button>
+                )
+            }
 
             {showTrailer && (
                 <div className="modal-overlay" onClick={() => setShowTrailer(false)}>
@@ -41,13 +58,27 @@ export const MovieActions = ({ movie }) => {
                 </div>
             )}
 
-            <button
-                className="add-btn"
-                onClick={() => console.log('Agregar a mi lista: ', movie)}
-            >
-                <i className="fa-solid fa-plus"></i>
-                Mi lista
-            </button>
+            {isAuthenticated
+                ? (
+                    <button
+                        className="add-btn"
+                        onClick={() => console.log('Agregar a mi lista: ', movie)}
+                    >
+                        <i className="fa-solid fa-plus"></i>
+                        Mi lista
+                    </button>
+                )
+                : (
+                    <button
+                        className="add-btn"
+                        onClick={() => navigate('/login')}
+                    >
+                        <i className="fa-solid fa-plus"></i>
+                        Iniciar sesion para agregar a tu lista
+                    </button>
+                )
+
+            }
         </div>
     )
 }
