@@ -1,6 +1,6 @@
 import '../../style/navbarIcons.css'
 import { Notifications } from './/Notifications'
-import { Profiles } from './Profiles'
+import { Account } from './Account'
 import { Searcher } from './Searcher'
 
 export const NavbarIcons = ({ query, setQuery }) => {       
@@ -9,7 +9,7 @@ export const NavbarIcons = ({ query, setQuery }) => {
         <div className='navbar-icons'>
             <Searcher query={query} setQuery={setQuery} />
             <Notifications />
-            <Profiles />
+            <Account />
         </div>
     )
 }

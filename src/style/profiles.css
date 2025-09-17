@@ -1,49 +1,108 @@
-.user-container {
-  position: relative;
-  list-style: none;
-  cursor: pointer;
+/* Contenedor principal */
+.account-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background-color: #111;
+  color: white;
+  text-align: center;
+  padding: 2rem;
 }
 
-.user-dropdown {
-  position: absolute;
-  top: 100%;
-  right: 0;
-  margin-top: 10px;
-  background-color: #141414; /* Fondo oscuro tipo Netflix */
-  border: 1px solid #333;
-  border-radius: 6px;
-  width: 220px;
-  padding: 10px 0;
-  box-shadow: 0px 4px 15px rgba(0,0,0,0.5);
-  z-index: 1000;
+/* Título */
+.account-title {
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
 }
 
-.user-item {
-  padding: 10px 20px;
-  font-size: 0.95rem;
-  color: #e5e5e5;
+/* Grid de perfiles */
+.profiles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 1.5rem;
+  max-width: 600px;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+/* Card de perfil */
+.profile-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
 }
 
-.user-item:hover {
-  background-color: #333;
+.profile-card:hover {
+  transform: scale(1.05);
 }
 
-.user-dropdown hr {
-  border: none;
-  height: 1px;
-  background-color: #444;
-  margin: 8px 0;
+/* Avatar */
+.profile-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+  object-fit: cover;
+  border: 2px solid transparent;
+  transition: border-color 0.2s ease-in-out;
 }
 
-.logout {
-  color: #e50914; /* Rojo de Netflix */
+/* Nombre del perfil */
+.profile-name {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #bbb;
+  transition: color 0.2s ease-in-out;
+}
+
+/* Hover: resalta nombre y borde */
+.profile-card:hover .profile-avatar {
+  border-color: #fff;
+}
+
+.profile-card:hover .profile-name {
+  color: #fff;
   font-weight: bold;
 }
 
-.logout:hover {
-  background-color: #400000;
+/* Card para agregar perfil */
+.add-profile {
+  background-color: #222;
+  border: 2px dashed #555;
+  border-radius: 8px;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.add-profile:hover {
+  background-color: #333;
+  border-color: #fff;
+}
+
+.plus-sign {
+  font-size: 2.5rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Botón para administrar perfiles */
+.manage-profiles-btn {
+  background-color: transparent;
+  color: #bbb;
+  font-weight: bold;
+  border: 1px solid #555;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+
+.manage-profiles-btn:hover {
+  background-color: #333;
+  color: white;
+  border-color: white;
 }

@@ -23,12 +23,11 @@ export const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!formData.firstName.trim()) return toast.warning("El nombre es obligatorio");
-        if (!formData.lastName.trim()) return toast.warning("El apellido es obligatorio");
-        if (!formData.email.trim()) return toast.warning("El email es obligatorio");
-        if (!formData.password.trim()) return toast.warning("La contraseña es obligatoria");
-        if (formData.password !== formData.confirmPassword)
-            return toast.error("Las contraseñas no coinciden");
+        if (!formData.firstName.trim() || formData.firstName.length <= 3) return toast.warning("El nombre es obligatorio y debe contener mas de 3 letras")
+        if (!formData.lastName.trim() || formData.lastName.length <= 3) return toast.warning("El apellido es obligatorio y debe contener mas de 3 letras")
+        if (!formData.email.trim() || !formData.email.includes('@')) return toast.warning("El email es obligatorio y debe contener @")
+        if (!formData.password.trim()) return toast.warning("La contraseña es obligatoria")
+        if (formData.password !== formData.confirmPassword) return toast.error("Las contraseñas no coinciden")
 
         // Simulamos login - en el futuro acá llamaríamos a nuestra API
         login({
@@ -37,7 +36,7 @@ export const Login = () => {
             email: formData.email,
             role: "user", // o "admin" si es admin
         });
-        navigate("/profiles"); // redirigir a creación de perfiles
+        navigate("/account"); // redirigir a creación de perfiles
     };
 
     const handleGoogleLogin = () => {
@@ -108,7 +107,8 @@ export const Login = () => {
                         onClick={handleGoogleLogin}
                         className="google-button"
                     >
-                        Continuar con Google
+                        <i className="fa-brands fa-google"></i>
+                        Continuar con Google 
                     </button>
                 </div>
             </div>

@@ -1,9 +1,10 @@
-import '../../style/profiles.css'
+import '../../style/account.css'
 import { useRef, useState } from 'react'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
 import { NavLink } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
-export const Profiles = () => {
+
+export const Account = () => {
     const [openUserMenu, setOpenUserMenu] = useState(false)
     const userIconRef = useRef(null)
     const userMenuRef = useRef(null)
@@ -37,7 +38,9 @@ export const Profiles = () => {
                                 </NavLink>
                             )}
 
-                            <div className="user-item">Cuenta</div>
+                            <NavLink to={'/profiles'}>
+                                <div className="user-item">Perfiles</div>
+                            </NavLink>
 
                             <hr />
                             <div className="user-item logout" onClick={logout}>

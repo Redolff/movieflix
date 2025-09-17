@@ -20,50 +20,57 @@ import { GamesAdmin } from './pages/admin/games/GamesAdmin'
 import { UsersAdmin } from './pages/admin/users/UsersAdmin'
 import { Login } from './pages/Login'
 import { ProtectedRoute } from './pages/ProtectedRoute'
+import { Profiles } from './pages/Profiles'
+import { AuthProvider } from './context/AuthContext'
 
 function App() {
   const [query, setQuery] = useState("")
 
   return (
     <Router>
-      <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
-      <Navbar query={query} setQuery={setQuery} />
-      <Routes>
-        <Route path='/' element={<Inicio query={query} />} />
-        <Route path='/login' element={<Login />} />
+      <AuthProvider>
 
-        <Route path='/admin'
-          element={
-            <ProtectedRoute adminOnly>
-              <AdminLayout />
-            </ProtectedRoute>
-          }>
-          <Route index element={<Dashboard />} />
-          <Route path='movies' element={<MoviesAdmin />} />
-          <Route path='series' element={<SeriesAdmin />} />
-          <Route path='games' element={<GamesAdmin />} />
-          <Route path='users' element={<UsersAdmin />} />
-        </Route>
+        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+        <Navbar query={query} setQuery={setQuery} />
+        <Routes>
+          <Route path='/' element={<Inicio query={query} />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/profiles' element={<Profiles />} />
 
-        <Route path='/movies' element={<Movies />} />
-        <Route path='/movies/:id' element={<MovieDetail />} />
+          <Route path='/admin'
+            element={
+              <ProtectedRoute adminOnly>
+                <AdminLayout />
+              </ProtectedRoute>
+            }>
+            <Route index element={<Dashboard />} />
+            <Route path='movies' element={<MoviesAdmin />} />
+            <Route path='series' element={<SeriesAdmin />} />
+            <Route path='games' element={<GamesAdmin />} />
+            <Route path='users' element={<UsersAdmin />} />
+          </Route>
 
-        <Route path='/series' element={<Series />} />
-        <Route path='/series/:id' element={<SerieDetail />} />
+          <Route path='/movies' element={<Movies />} />
+          <Route path='/movies/:id' element={<MovieDetail />} />
 
-        <Route path='/games' element={<Games />} />
-        <Route path='/games/:id' element={<GameDetail />} />
+          <Route path='/series' element={<Series />} />
+          <Route path='/series/:id' element={<SerieDetail />} />
 
-        <Route path='/mylist'
-          element={
-            <ProtectedRoute adminOnly>
-              <Mylist />
-            </ProtectedRoute>
-          } />
+          <Route path='/games' element={<Games />} />
+          <Route path='/games/:id' element={<GameDetail />} />
 
-        <Route path='*' element={<Navigate to={'/'} />} />
+          <Route path='/mylist'
+            element={
+              <ProtectedRoute>
+                <Mylist />
+              </ProtectedRoute>
+            }
+          />
 
-      </Routes>
+          <Route path='*' element={<Navigate to={'/'} />} />
+        </Routes>
+
+      </AuthProvider>
     </Router>
   )
 }

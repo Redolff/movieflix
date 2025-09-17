@@ -3,7 +3,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #000; /* gris oscuro */
+  background-color: #000;
+  /* gris oscuro */
   padding: 1rem;
 }
 
@@ -44,12 +45,14 @@
 }
 
 .login-input:focus {
-  border-color: #facc15; /* Amarillo */
+  border-color: #facc15;
+  /* Amarillo */
 }
 
 /* Botón principal */
 .login-button {
-  background-color: #facc15; /* Amarillo Meli */
+  background-color: #facc15;
+  /* Amarillo Meli */
   color: #000;
   font-weight: bold;
   padding: 0.75rem;
@@ -60,32 +63,56 @@
 }
 
 .login-button:hover {
-  background-color: #eab308; /* Amarillo un poco más oscuro */
+  background-color: #eab308;
+  /* Amarillo un poco más oscuro */
 }
 
-/* Sección de Google */
+/* Contenedor del login con Google */
 .login-google {
-  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
+/* Línea divisoria */
 .login-divider {
   color: #888;
-  margin: 0.5rem 0;
+  font-size: 0.9rem;
+  margin-bottom: 0.8rem;
+  text-align: center;
 }
 
-/* Botón Google */
+/* Botón de Google */
 .google-button {
-  background-color: #ef4444;
-  color: #fff;
-  font-weight: bold;
-  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* Mantiene el texto centrado */
+  gap: 0.5rem;
+  /* Espacio entre ícono y texto */
   width: 100%;
+  padding: 0.7rem 1rem;
   border: none;
   border-radius: 8px;
+  background-color: #db4437;
+  /* Rojo de Google */
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background 0.2s ease;
+  position: relative;
 }
 
 .google-button:hover {
-  background-color: #dc2626;
+  background-color: #c33d31;
+}
+
+/* Ícono de Google */
+.google-button i {
+  position: absolute;
+  left: 1rem;
+  /* Pegado al borde izquierdo */
+  font-size: 1.2rem;
+  /* Ajusta el tamaño del icono */
 }
