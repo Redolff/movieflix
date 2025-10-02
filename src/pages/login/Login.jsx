@@ -1,15 +1,13 @@
-import '../style/login.css'
+import '../../style/login.css'
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../../context/AuthContext';
 
 export const Login = () => {
     const navigate = useNavigate()
     const { login } = useAuth()
     const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -23,20 +21,16 @@ export const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        if (!formData.firstName.trim() || formData.firstName.length <= 3) return toast.warning("El nombre es obligatorio y debe contener mas de 3 letras")
-        if (!formData.lastName.trim() || formData.lastName.length <= 3) return toast.warning("El apellido es obligatorio y debe contener mas de 3 letras")
         if (!formData.email.trim() || !formData.email.includes('@')) return toast.warning("El email es obligatorio y debe contener @")
         if (!formData.password.trim()) return toast.warning("La contraseña es obligatoria")
         if (formData.password !== formData.confirmPassword) return toast.error("Las contraseñas no coinciden")
 
         // Simulamos login - en el futuro acá llamaríamos a nuestra API
         login({
-            firstName: formData.firstName,
-            lastName: formData.lastName,
             email: formData.email,
             role: "user", // o "admin" si es admin
         });
-        navigate("/account"); // redirigir a creación de perfiles
+        navigate("/profiles"); // redirigir a seccion de perfiles
     };
 
     const handleGoogleLogin = () => {
@@ -52,22 +46,6 @@ export const Login = () => {
                 </h1>
 
                 <form className="login-form" onSubmit={handleSubmit}>
-                    <input
-                        type="text"
-                        name="firstName"
-                        placeholder="Nombre"
-                        value={formData.firstName}
-                        onChange={handleChange}
-                        className="login-input"
-                    />
-                    <input
-                        type="text"
-                        name="lastName"
-                        placeholder="Apellido"
-                        value={formData.lastName}
-                        onChange={handleChange}
-                        className="login-input"
-                    />
                     <input
                         type="email"
                         name="email"
@@ -87,16 +65,13 @@ export const Login = () => {
                     <input
                         type="password"
                         name="confirmPassword"
-                        placeholder="Repetir contraseña"
+                        placeholder="Repetir Contraseña"
                         value={formData.confirmPassword}
                         onChange={handleChange}
                         className="login-input"
                     />
 
-                    <button
-                        type="submit"
-                        className="login-button"
-                    >
+                    <button type="submit" className="login-button">
                         Iniciar Sesión
                     </button>
                 </form>
@@ -108,9 +83,14 @@ export const Login = () => {
                         className="google-button"
                     >
                         <i className="fa-brands fa-google"></i>
-                        Continuar con Google 
+                        Continuar con Google
                     </button>
                 </div>
+
+                <p className="login-switch">
+                    ¿No tienes cuenta?
+                    <span onClick={() => navigate("/register")}>Regístrate</span>
+                </p>
             </div>
         </div>
     );

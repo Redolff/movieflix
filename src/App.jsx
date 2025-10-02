@@ -18,7 +18,8 @@ import { MoviesAdmin } from './pages/admin/movies/MoviesAdmin'
 import { SeriesAdmin } from './pages/admin/series/SeriesAdmin'
 import { GamesAdmin } from './pages/admin/games/GamesAdmin'
 import { UsersAdmin } from './pages/admin/users/UsersAdmin'
-import { Login } from './pages/Login'
+import { Login } from './pages/login/Login'
+import { Register } from './pages/login/Register'
 import { ProtectedRoute } from './pages/ProtectedRoute'
 import { Profiles } from './pages/Profiles'
 import { AuthProvider } from './context/AuthContext'
@@ -34,6 +35,7 @@ function App() {
         <Navbar query={query} setQuery={setQuery} />
         <Routes>
           <Route path='/' element={<Inicio query={query} />} />
+          <Route path='/register' element={<Register /> } />
           <Route path='/login' element={<Login />} />
           <Route path='/profiles' element={<Profiles />} />
 
