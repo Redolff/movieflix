@@ -12,17 +12,17 @@ export const Games = () => {
             <Carrousels
                 title={`Todos los juegos`}
                 items={allGames}
-                renderItem={(allGames) => <Game game={allGames} key={allGames.id} />}
+                renderItem={(allGames) => <Game game={allGames} key={allGames._id} />}
             />
             <Carrousels
                 title={`Todos los juegos para PS4`}
                 items={ps4Games}
-                renderItem={(ps4Games) => <Game game={ps4Games} key={ps4Games.id} />}
+                renderItem={(ps4Games) => <Game game={ps4Games} key={ps4Games._id} />}
             />
             <Carrousels
                 title={`Todos los juegos para PC`}
                 items={pcGames}
-                renderItem={(pcGames) => <Game game={pcGames} key={pcGames.id} />}
+                renderItem={(pcGames) => <Game game={pcGames} key={pcGames._id} />}
             />
         </div>
     )

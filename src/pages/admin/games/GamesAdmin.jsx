@@ -18,13 +18,12 @@ export const GamesAdmin = () => {
     <div className="movies-admin">
       <h1 className="admin-title">🎮 Administrar Juegos </h1>
 
-      {/* Mostrar un preview de algunas películas */}
       <div className="movies-preview">
-        {allGames?.slice(0, 4).map((movie) => (
-          <div key={movie.id} className="movie-card">
-            <img src={movie.poster} alt={movie.title} />
-            <h3>{movie.title}</h3>
-            <p>{movie.year}</p>
+        {allGames?.slice(0, 4).map((game) => (
+          <div key={game._id} className="movie-card">
+            <img src={game.poster} alt={game.title} />
+            <h3>{game.title}</h3>
+            <p>{game.year}</p>
           </div>
         ))}
       </div>

@@ -19,17 +19,17 @@ export const Inicio = ({ query }) => {
             <Carrousels 
                 title={`Todas las películas 🎬`} 
                 items={filteredMovies} 
-                renderItem={(allMovies) => <Movie movie={allMovies} key={allMovies.id} />}
+                renderItem={(allMovies) => <Movie movie={allMovies} key={allMovies._id} />}
             />
             <Carrousels 
                 title={`Todas las series 📺`} 
                 items={filteredSeries} 
-                renderItem={(allSeries) => <Serie serie={allSeries} key={allSeries.id} />}
+                renderItem={(allSeries) => <Serie serie={allSeries} key={allSeries._id} />}
             />
             <Carrousels 
                 title={`Todos los juegos 🎮`} 
                 items={filteredGames} 
-                renderItem={(allGames) => <Game game={allGames} key={allGames.id} />}
+                renderItem={(allGames) => <Game game={allGames} key={allGames._id} />}
             />
         </>
     )

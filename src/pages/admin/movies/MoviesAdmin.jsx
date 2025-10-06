@@ -21,7 +21,7 @@ export const MoviesAdmin = () => {
       {/* Mostrar un preview de algunas películas */}
       <div className="movies-preview">
         {allMovies?.slice(0, 4).map((movie) => (
-          <div key={movie.id} className="movie-card">
+          <div key={movie._id} className="movie-card">
             <img src={movie.poster} alt={movie.title} />
             <h3>{movie.title}</h3>
             <p>{movie.year}</p>

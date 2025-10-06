@@ -13,17 +13,17 @@ export const Series = () => {
             <Carrousels 
                 title={`Todas las series`}
                 items={allSeries}
-                renderItem={(allSeries) => <Serie serie={allSeries} key={allSeries.id} /> }
+                renderItem={(allSeries) => <Serie serie={allSeries} key={allSeries._id} /> }
             />
             <Carrousels 
                 title={`Series de Crimen`}
                 items={crimeSerie}
-                renderItem={(crimeSerie) => <Serie serie={crimeSerie} key={crimeSerie.id} /> }
+                renderItem={(crimeSerie) => <Serie serie={crimeSerie} key={crimeSerie._id} /> }
             />
             <Carrousels 
                 title={`Series de 5 temporadas`}
                 items={seasonSeries}
-                renderItem={(seasonSeries) => <Serie serie={seasonSeries} key={seasonSeries.id} /> }
+                renderItem={(seasonSeries) => <Serie serie={seasonSeries} key={seasonSeries._id} /> }
             />
         </div>
     )

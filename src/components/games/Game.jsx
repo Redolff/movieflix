@@ -5,12 +5,12 @@ export const Game = ({ game }) => {
     const navigate = useNavigate()
 
     const handleNavigate = (game) => {
-        navigate(`/games/${game.id}`)
+        navigate(`/games/${game._id}`)
     }
 
     return (
         <div onClick={() => handleNavigate(game)}
-            key={game.id}
+            key={game._id}
             className="movie-card"
         >
             <img src={game.poster} alt={game.title} />

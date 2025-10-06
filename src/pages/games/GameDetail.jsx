@@ -16,12 +16,7 @@ export const GameDetail = () => {
     const [showConfirmDelete, setShowConfirmDelete] = useState(false)
     const { handleDelete } = useDeleteData("games", id)
     const { handleUpdate } = useUpdateData("games", id)
-    const { isAuthenticated } = useAuth()
-
-    const user = {
-        name: 'Federico',
-        role: 'admin'
-    }
+    const { user } = useAuth()
 
     const handleEditClick = () => {
         setFormData({ ...game }) // Clonamos el juego actual
@@ -200,7 +195,7 @@ export const GameDetail = () => {
                 <div className='movie-actions'>
                     <GameActions game={game} />
                     {/* Solo admins ven este botón */}
-                    {isAuthenticated.role === "admin" && (
+                    {user?.role === "admin" && (
                         <div className='movie-actions-bottom'>
                             {isEditing ? (
                                 <>

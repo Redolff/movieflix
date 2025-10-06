@@ -16,15 +16,10 @@ export const MovieDetail = () => {
     const [isEditing, setIsEditing] = useState(false)
     const [formData, setFormData] = useState(null)
     const [showConfirmDelete, setShowConfirmDelete] = useState(false)
-    const { isAuthenticated } = useAuth()
-
-    const user = {
-        name: 'Federico',
-        role: 'admin'
-    }
+    const { user } = useAuth()
 
     const handleEditClick = () => {
-        setFormData({ ...movie }) // Clonamos el juego actual
+        setFormData({ ...movie }) 
         setIsEditing(true)
     }
 
@@ -91,7 +86,7 @@ export const MovieDetail = () => {
     )
 
     return (
-        <div key={movie.id} className="movie-detail">
+        <div key={movie._id} className="movie-detail">
             <img src={movie.poster} alt={movie.title} className="movie-detail-poster" />
             <div className="movie-detail-info">
                 {isEditing ? (
@@ -159,7 +154,7 @@ export const MovieDetail = () => {
                 <div className="movie-actions">
                     <MovieActions movie={movie} />
                     {/* Solo admins ven este botón */}
-                    {isAuthenticated.role === "admin" && (
+                    {user?.role === "admin" && (
                         <div className='movie-actions-bottom'>
                             {isEditing ? (
                                 <>

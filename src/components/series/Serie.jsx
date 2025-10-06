@@ -5,12 +5,12 @@ export const Serie = ({ serie }) => {
     const navigate = useNavigate()
 
     const handleNavigate = (serie) => {
-        navigate(`/series/${serie.id}`)
+        navigate(`/series/${serie._id}`)
     }
 
     return (
         <div onClick={() => handleNavigate(serie)}   
-            key={serie.id}
+            key={serie._id}
             className="movie-card"
         >
             <img src={serie.poster} alt={serie.title} />

@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   const navigate = useNavigate()
 
   const login = (newUser) => setUser(newUser);
+
   const logout = () => {
     navigate("/login")
     setUser(null)

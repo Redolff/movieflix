@@ -56,7 +56,6 @@ export const CreateMovieForm = ({ onSuccess }) => {
 
     const newMovie = {
       ...formData,
-      id: crypto.randomUUID(),
       year: Number(formData.year),
       duration: Number(formData.duration),
       rate: Number(formData.rate),

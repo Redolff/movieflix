@@ -20,11 +20,11 @@ export const SeriesAdmin = () => {
 
             {/* Mostrar un preview de algunas películas */}
             <div className="movies-preview">
-                {allSeries?.slice(0, 4).map((movie) => (
-                    <div key={movie.id} className="movie-card">
-                        <img src={movie.poster} alt={movie.title} />
-                        <h3>{movie.title}</h3>
-                        <p>{movie.year}</p>
+                {allSeries?.slice(0, 4).map((serie) => (
+                    <div key={serie._id} className="movie-card">
+                        <img src={serie.poster} alt={serie.title} />
+                        <h3>{serie.title}</h3>
+                        <p>{serie.year}</p>
                     </div>
                 ))}
             </div>

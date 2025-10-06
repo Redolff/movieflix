@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 
-export const useFetchId = (resoruce, id) => {
+export const useFetchId = (resource, id) => {
     const [dataId, setDataId] = useState(null)
     const [loading, setLoading] = useState(false)
 
@@ -8,20 +8,20 @@ export const useFetchId = (resoruce, id) => {
         const fetchMovie = async () => {
             setLoading(true)
             try {
-                const response = await fetch(`http://localhost:3000/${resoruce}/${id}`)
+                const response = await fetch(`http://localhost:3000/${resource}/${id}`)
                 if (!response.ok) {
                     console.error(`Error fetching response: ${response.status}`)
                 }
                 const data = await response.json()
                 setDataId(data)
             } catch (error) {
-                console.error(`Error cargando ${resoruce}: `, error)
+                console.error(`Error cargando ${resource}: `, error)
             } finally {
                 setLoading(false)
             }
         }
         fetchMovie()
-    }, [resoruce, id])
+    }, [resource, id])
 
     return { dataId, loading }
 }

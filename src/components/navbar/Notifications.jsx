@@ -3,6 +3,7 @@ import { useFetchData } from '../../hooks/useFetchData'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
 import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+// eslint-disable-next-line no-unused-vars
 import { motion, AnimatePresence } from 'framer-motion'
 
 export const Notifications = () => {
@@ -16,17 +17,16 @@ export const Notifications = () => {
 
     useOutsideClick([notifIconRef, notifMenuRef], () => setOpenNotifications(false))
 
-    const handleClick = (type, id) => {
+    const handleClick = (type, _id) => {
         setOpenNotifications(false)
-        navigate(`/${type.toLowerCase()}s/${id}`)
+        navigate(`/${type.toLowerCase()}s/${_id}`)
     }
 
     const renderItem = (item, type) => (
-
         <div
-            key={item.id}
+            key={item._id}
             className="notification-item"
-            onClick={() => handleClick(type, item.id)}
+            onClick={() => handleClick(type, item._id)}
         >
             <img src={item.poster} alt={item.title} className="notif-img" />
             <div className="notif-info">

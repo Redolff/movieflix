@@ -28,7 +28,7 @@ export const Login = () => {
         // Simulamos login - en el futuro acá llamaríamos a nuestra API
         login({
             email: formData.email,
-            role: "user", // o "admin" si es admin
+            role: "admin", // "user" o "admin"
         });
         navigate("/profiles"); // redirigir a seccion de perfiles
     };

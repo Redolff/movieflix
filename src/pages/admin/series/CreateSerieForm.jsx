@@ -58,7 +58,6 @@ export const CreateSerieForm = ({ onSuccess }) => {
 
         const newSerie = {
             ...formData,
-            id: crypto.randomUUID(),
             year: Number(formData.year),
             seasons: Number(formData.seasons),
             episodes: Number(formData.episodes),

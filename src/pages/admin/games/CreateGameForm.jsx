@@ -73,7 +73,6 @@ export const CreateGameForm = ({ onSuccess }) => {
 
         const newGame = {
             ...formData,
-            id: crypto.randomUUID(),
             year: Number(formData.year),
             rating: Number(formData.rating),
             genre: genreArray,
