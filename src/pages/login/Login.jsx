@@ -18,19 +18,17 @@ export const Login = () => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formData.email.trim() || !formData.email.includes('@')) return toast.warning("El email es obligatorio y debe contener @")
-        if (!formData.password.trim()) return toast.warning("La contraseña es obligatoria")
-        if (formData.password !== formData.confirmPassword) return toast.error("Las contraseñas no coinciden")
+        const { email, password, confirmPassword } = formData
 
-        // Simulamos login - en el futuro acá llamaríamos a nuestra API
-        login({
-            email: formData.email,
-            role: "admin", // "user" o "admin"
-        });
-        navigate("/profiles"); // redirigir a seccion de perfiles
+        if (!email.trim() || !email.includes('@')) return toast.warning("El email es obligatorio y debe contener @")
+        if (!password.trim()) return toast.warning("La contraseña es obligatoria")
+        if (password !== confirmPassword) return toast.error("Las contraseñas no coinciden")
+
+        login(email, password)
+        navigate('/profiles')
     };
 
     const handleGoogleLogin = () => {
