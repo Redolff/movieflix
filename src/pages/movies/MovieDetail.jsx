@@ -13,7 +13,7 @@ export const MovieDetail = () => {
     const { user } = useAuth()
     const { dataId: movie, loading } = useFetchId("movies", id)
     const { handleDelete } = useDeleteData("movies")
-    const { handleUpdate } = useUpdateData("movies", id)
+    const { handleUpdate } = useUpdateData("movies")
     const [isEditing, setIsEditing] = useState(false)
     const [formData, setFormData] = useState(null)
     const [showConfirmDelete, setShowConfirmDelete] = useState(false)
@@ -49,12 +49,15 @@ export const MovieDetail = () => {
                 .filter(Boolean);
         }
 
-        handleUpdate(plainData, {
-            onSucces: (updatedMovie) => {
+        handleUpdate(id, plainData, {
+            onSuccess: (updatedMovie) => {
                 setFormData(null);
                 setIsEditing(false);
                 Object.assign(movie, updatedMovie);
             },
+            onError: (error) => {
+                console.error(error)
+            }
         });
     }
 

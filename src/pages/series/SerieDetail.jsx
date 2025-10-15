@@ -15,7 +15,7 @@ export const SerieDetail = () => {
     const [formData, setFormData] = useState(null)
     const [showConfirmDelete, setShowConfirmDelete] = useState(false)
     const { handleDelete } = useDeleteData("series")
-    const { handleUpdate } = useUpdateData("series", id)
+    const { handleUpdate } = useUpdateData("series")
     const { user } = useAuth()
 
     const handleEditClick = () => {
@@ -50,12 +50,15 @@ export const SerieDetail = () => {
                 .filter(Boolean);
         }
 
-        handleUpdate(plainData, {
-            onSucces: (updatedSerie) => {
+        handleUpdate(id, plainData, {
+            onSuccess: (updatedSerie) => {
                 setFormData(null);
                 setIsEditing(false);
                 Object.assign(serie, updatedSerie);
             },
+            onError: (error) => {
+                console.error(error)
+            }
         });
     }
 

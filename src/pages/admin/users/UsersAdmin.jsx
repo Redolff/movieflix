@@ -14,6 +14,8 @@ export const UsersAdmin = () => {
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [editingUserId, setEditingUserId] = useState(null)
 
+    console.log('editingUserId: ', editingUserId)
+
     useEffect(() => {
         if (allUsers?.length) {
             setUsers(allUsers)
@@ -51,51 +53,61 @@ export const UsersAdmin = () => {
                         <div className="user-info">
                             <h3>{user.firstName} {user.lastName}</h3>
                             <p className="user-email">{user.email}</p>
-                            <div className="user-role">
-                                <span> Rol: </span>
-                                {editingUserId === user._id ? (
-                                    <>
+                            {editingUserId !== user._id
+                                ?
+                                (
+                                    <p> Rol: {user.role} </p>
+                                )
+                                :
+                                (
+                                    <div className="user-role">
                                         <select
+                                            name="role-select"
                                             value={user.role}
                                             onChange={(e) => handleRoleChange(user._id, e.target.value)}
                                             className="role-select"
                                         >
-                                            <option value="user">User</option>
                                             <option value="admin">Admin</option>
+                                            <option value="user">User</option>
                                         </select>
-                                    </>
-                                ) : (
-                                    <span>{user.role}</span>
-                                )}
-                            </div>
+                                    </div>
+                                )
+                            }
                         </div>
 
                         <div className="user-actions">
-                            {editingUserId === user._id ?
-                                <>
-                                    <button
-                                        className="btn-edit"
-                                        onClick={() => setEditingUserId(null)}
-                                    >
-                                        <i className="fa-solid fa-pen"></i> Cancelar
-                                    </button>
-                                </>
-                                : 
-                                <>
-                                    <button
-                                        className="btn-edit"
-                                        onClick={() => setEditingUserId(user._id)}
-                                    >
-                                        <i className="fa-solid fa-pen"></i> Editar
-                                    </button>
-                                </>
+                            {editingUserId === user._id
+                                ? (
+                                    <>
+                                        <button
+                                            className="btn-edit"
+                                            onClick={(e) => handleRoleChange(user._id, e.target.value)}
+                                        >
+                                            <i className="fa-solid fa-check"></i> Guardar
+                                        </button>
+                                        <button className="btn-delete" onClick={() => setEditingUserId(null)}>
+                                            <i className="fa-solid fa-xmark"></i> Cancelar
+                                        </button>
+                                    </>
+                                )
+                                :
+                                (
+                                    <>
+                                        <button
+                                            className="btn-edit"
+                                            onClick={() => setEditingUserId(user._id)}
+                                        >
+                                            <i className="fa-solid fa-pen"></i> Editar
+                                        </button>
+                                        <button
+                                            className="btn-delete"
+                                            onClick={() => setConfirmDelete(user._id)}
+                                        >
+                                            <i className="fa-solid fa-trash"></i> Eliminar
+                                        </button>
+                                    </>
+                                )
                             }
-                            <button
-                                className="btn-delete"
-                                onClick={() => setConfirmDelete(user._id)}
-                            >
-                                <i className="fa-solid fa-trash"></i> Eliminar
-                            </button>
                         </div>
                     </div>
                 ))}

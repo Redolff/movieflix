@@ -15,7 +15,7 @@ export const GameDetail = () => {
     const [formData, setFormData] = useState(null)
     const [showConfirmDelete, setShowConfirmDelete] = useState(false)
     const { handleDelete } = useDeleteData("games")
-    const { handleUpdate } = useUpdateData("games", id)
+    const { handleUpdate } = useUpdateData("games")
     const { user } = useAuth()
 
     const handleEditClick = () => {
@@ -59,12 +59,15 @@ export const GameDetail = () => {
                 .filter(Boolean);
         }
 
-        handleUpdate(plainData, {
-            onSucces: (updatedGame) => {
+        handleUpdate(id, plainData, {
+            onSuccess: (updatedGame) => {
                 setFormData(null);
                 setIsEditing(false);
                 Object.assign(game, updatedGame);
             },
+            onerror: (error) => {
+                console.error(error)
+            }
         });
     }
 
