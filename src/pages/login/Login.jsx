@@ -24,17 +24,22 @@ export const Login = () => {
         const { email, password, confirmPassword } = formData
 
         if (!email.trim() || !email.includes('@')) return toast.warning("El email es obligatorio y debe contener @")
-        if (!password.trim()) return toast.warning("La contraseña es obligatoria")
+        if (!password.trim() || !confirmPassword.trim()) return toast.warning("La contraseña es obligatoria")
         if (password !== confirmPassword) return toast.error("Las contraseñas no coinciden")
 
-        login(email, password)
-        navigate('/profiles')
-    };
+        const result = await login(email, password)
+        if(result.success) {
+            navigate('/profiles')
+            toast.success(result.message)
+        } else {
+            toast.error(result.message)
+        }
+    }
 
     const handleGoogleLogin = () => {
         // Aquí en el futuro agregaremos integración con Google OAuth
         toast.info("Login con Google no implementado todavía");
-    };
+    }
 
     return (
         <div className="login-container">

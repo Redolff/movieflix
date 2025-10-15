@@ -32,7 +32,7 @@ export const CreateUserForm = ({ onSuccess }) => {
         if (!email.trim() || !email.includes('@')) return toast.warning("El email es obligatorio y debe contener @")
         if (!password.trim()) return toast.warning("La contraseña es obligatoria")
         if (password !== confirmPassword) return toast.error("Las contraseñas no coinciden")
-        if (role !== 'user' || role !== 'admin') return toast.error('El usuario debe tener un rol como admin o user')
+        if (role !== 'user' && role !== 'admin') return toast.error('El usuario debe tener un rol como admin o user')
 
         const newUser = {
             firstName,
@@ -43,7 +43,7 @@ export const CreateUserForm = ({ onSuccess }) => {
         };
 
         handleAdd(newUser, {
-            onSuccess: () => {
+            onSuccess: (createdUser) => {
                 toast.success("Usuario creado con éxito ✅");
                 setFormData({
                     firstName: "",
@@ -53,10 +53,10 @@ export const CreateUserForm = ({ onSuccess }) => {
                     confirmPassword: "",
                     role: ""
                 });
-                onSuccess?.(newUser); // cerrar form o redirigir
+                onSuccess?.(createdUser); // cerrar form o redirigir
             },
-        });
-    };
+        })
+    }
 
 
     return (
@@ -119,7 +119,7 @@ export const CreateUserForm = ({ onSuccess }) => {
                 </select>
             </div>
 
-            <button type="submit" >Guardar</button>
+            <button type="submit">Guardar</button>
         </form>
     )
 }

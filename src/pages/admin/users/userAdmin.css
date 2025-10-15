@@ -1,0 +1,126 @@
+.users-admin {
+    padding: 2rem;
+    background-color: #141414;
+    min-height: 100vh;
+    color: #fff;
+}
+
+.admin-title {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    color: #e50914;
+}
+
+.users-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    justify-items: center;
+}
+
+.user-card {
+    background: #1f1f1f;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    padding: 1.2rem;
+    width: 100%;
+    max-width: 320px;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.user-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.user-info h3 {
+    font-size: 1.2rem;
+    color: #e5e5e5;
+    margin-bottom: 0.2rem;
+}
+
+.user-email {
+    font-size: 0.9rem;
+    color: #b3b3b3;
+    margin-bottom: 0.8rem;
+}
+
+.user-role {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.role-select {
+    border: 1px solid #b3b3b3;
+    border-radius: 6px;
+    padding: 0.4rem 0.6rem;
+    font-size: 0.9rem;
+    background: #f9f9f9;
+    cursor: pointer;
+}
+
+.user-actions {
+    display: flex;
+    justify-content: space-around;
+}
+
+.btn-edit,
+.btn-delete,
+.btn-add-user {
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background 0.2s ease;
+}
+
+.btn-edit {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-edit:hover {
+    background-color: #2980b9;
+}
+
+.btn-delete {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-delete:hover {
+    background-color: #c0392b;
+}
+
+.btn-add-user {
+    margin-top: 2rem;
+    background-color: #27ae60;
+    color: white;
+}
+
+.btn-add-user:hover {
+    background-color: #1e8449;
+}
+
+/* Modal overlay */
+.form-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-modal-content {
+    background: #fff;
+    border-radius: 12px;
+    padding: 2rem;
+    min-width: 300px;
+    max-width: 480px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}

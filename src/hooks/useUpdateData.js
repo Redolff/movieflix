@@ -1,7 +1,7 @@
 import { toast } from "react-toastify"
 
-export const useUpdateData = (resource, id) => {
-    const handleUpdate = async (formData, { onSucces, onError }) => {
+export const useUpdateData = (resource) => {
+    const handleUpdate = async (id, formData, { onSuccess, onError }) => {
         try{
             const plainData = { ...formData }
             const response = await fetch(`http://localhost:3000/${resource}/${id}`, {
@@ -16,7 +16,7 @@ export const useUpdateData = (resource, id) => {
 
             toast.success(`${resource.slice(0, -1)} actualizado correctamente`)
 
-            if(onSucces) onSucces(updatedData)
+            if(onSuccess) onSuccess(updatedData)
 
         }catch(error){
             console.error(error)

@@ -8,6 +8,29 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false)
   const navigate = useNavigate()
 
+  const register = async (firstName, lastName, email, password) => {
+    const response = await fetch(`http://localhost:3000/auth/register`, {
+      method: 'POST',
+      headers: {
+        'Content-Type' : 'application/json'
+      },
+      body: JSON.stringify({ firstName, lastName, email, password }),
+      credentials: 'include'
+    })
+
+    const data = await response.json()
+    
+    if(response.ok) {
+      setUser(data.user)
+      setIsAuthenticated(true)
+      return { success: true, message: data.message }
+    } else {
+      setUser(null)
+      setIsAuthenticated(false)
+      return { success: false, message: data.message }
+    }
+  }
+
   const login = async (email, password) => {
     const response = await fetch(`http://localhost:3000/auth/login`, {
       method: 'POST',
@@ -17,16 +40,17 @@ export const AuthProvider = ({ children }) => {
       body: JSON.stringify({ email, password }),
       credentials: 'include'
     })
-
+    
+    const data = await response.json()
+    
     if (response.ok) {
-      const data = await response.json()
-      setUser(data.safeUser)
+      setUser(data.user)
       setIsAuthenticated(true)
-      return true
+      return { success: true, message: data.message }
     } else {
       setUser(null)
       setIsAuthenticated(false)
-      return false
+      return { success: false, message: data.message }
     }
   }
 
@@ -43,7 +67,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, login, logout, isAuthenticated }}>
+    <AuthContext.Provider value={{ user, register, login, logout, isAuthenticated }}>
       {children}
     </AuthContext.Provider>
   );

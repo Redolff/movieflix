@@ -35,9 +35,15 @@ function App() {
         <Navbar query={query} setQuery={setQuery} />
         <Routes>
           <Route path='/' element={<Inicio query={query} />} />
-          <Route path='/register' element={<Register /> } />
+          <Route path='/register' element={<Register />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/profiles' element={<Profiles />} />
+          <Route path='/profiles'
+            element={
+            <ProtectedRoute>
+              <Profiles />
+            </ProtectedRoute>
+            }
+          />
 
           <Route path='/admin'
             element={
