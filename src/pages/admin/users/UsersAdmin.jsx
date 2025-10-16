@@ -4,17 +4,19 @@ import { useEffect, useState } from "react";
 import { CreateUserForm } from "./CreateUserForm";
 import { useDeleteData } from '../../../hooks/useDeleteData';
 import { useUpdateData } from '../../../hooks/useUpdateData';
+import { toast } from 'react-toastify';
 
 export const UsersAdmin = () => {
     const { data: allUsers } = useFetchData("users")
     const { handleDelete } = useDeleteData("users")
     const { handleUpdate } = useUpdateData("users")
+
     const [users, setUsers] = useState([])
     const [showForm, setShowForm] = useState(false);
     const [confirmDelete, setConfirmDelete] = useState(false)
     const [editingUserId, setEditingUserId] = useState(null)
+    const [editedUser, setEditedUser] = useState(null)
 
-    console.log('editingUserId: ', editingUserId)
 
     useEffect(() => {
         if (allUsers?.length) {
@@ -31,16 +33,51 @@ export const UsersAdmin = () => {
         await handleDelete(id);
         setUsers((prev) => prev.filter((u) => u._id !== id));
         setConfirmDelete(false);
-    };
+    }
 
-    const handleRoleChange = async (userId, newRole) => {
-        handleUpdate(userId, { role: newRole }, {
-            onSucces: (updatedUser) => {
-                setUsers(prev => prev.map(u => u._id === userId ? updatedUser : u))
-                setEditingUserId(null)
-            },
-            onError: (err) => console.error(err)
-        })
+    const handleEdit = (user) => {
+        setEditingUserId(user._id)
+        setEditedUser({ ...user })
+    }
+
+    const handleCancel = () => {
+        setEditingUserId(null)
+        setEditedUser(null)
+    }
+
+    const handleFieldChange = (field, value) => {
+        setEditedUser((prev) => ({
+            ...prev,
+            [field]: value
+        }))
+    }
+
+    const handleSave = async () => {
+        const validRoles = ["admin", "user"];
+
+        if (!validRoles.includes(editedUser.role)) {
+            toast.error('El rol debe ser user o admin')
+            return
+        }
+
+        try {
+            await handleUpdate(editedUser._id, { role: editedUser.role }, {
+                onSuccess: (updatedUser) => {
+                    setUsers((prev) =>
+                        prev.map((u) => u._id === updatedUser._id ? updatedUser : u)
+                    )
+                    setEditingUserId(null)
+                    setEditedUser(null)
+                },
+                onError: (error) => {
+                    console.error(error)
+                    toast.error('Error al actualizar el rol')
+                }
+            })
+        } catch (error) {
+            console.error(error)
+            toast.error("Ocurrió un error al actualizar el usuario")
+        }
     }
 
     return (
@@ -56,16 +93,18 @@ export const UsersAdmin = () => {
                             {editingUserId !== user._id
                                 ?
                                 (
-                                    <p> Rol: {user.role} </p>
+                                    <p> Rol: <strong> {user.role} </strong> </p>
                                 )
                                 :
                                 (
                                     <div className="user-role">
+                                        <label htmlFor={`role-${user._id}`}>Seleccionar rol:</label>
                                         <select
-                                            name="role-select"
-                                            value={user.role}
-                                            onChange={(e) => handleRoleChange(user._id, e.target.value)}
-                                            className="role-select"
+                                            id={`role-${user._id}`}
+                                            name="role"
+                                            value={editedUser?.role || ""}
+                                            onChange={(e) => handleFieldChange("role", e.target.value)}
+                                            className='role-select'
                                         >
                                             <option value="admin">Admin</option>
                                             <option value="user">User</option>
@@ -81,11 +120,14 @@ export const UsersAdmin = () => {
                                     <>
                                         <button
                                             className="btn-edit"
-                                            onClick={(e) => handleRoleChange(user._id, e.target.value)}
+                                            onClick={handleSave}
                                         >
                                             <i className="fa-solid fa-check"></i> Guardar
                                         </button>
-                                        <button className="btn-delete" onClick={() => setEditingUserId(null)}>
+                                        <button 
+                                            className="btn-delete" 
+                                            onClick={handleCancel}
+                                        >
                                             <i className="fa-solid fa-xmark"></i> Cancelar
                                         </button>
                                     </>
@@ -95,7 +137,7 @@ export const UsersAdmin = () => {
                                     <>
                                         <button
                                             className="btn-edit"
-                                            onClick={() => setEditingUserId(user._id)}
+                                            onClick={() => handleEdit(user)}
                                         >
                                             <i className="fa-solid fa-pen"></i> Editar
                                         </button>

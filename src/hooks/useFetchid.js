@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react"
+import { useLoading } from "../context/LoadingContext"
 
 export const useFetchId = (resource, id) => {
     const [dataId, setDataId] = useState(null)
-    const [loading, setLoading] = useState(false)
+    const { isLoading, setIsLoading } = useLoading()
 
     useEffect(() => {
         const fetchMovie = async () => {
-            setLoading(true)
+            setIsLoading(true)
             try {
                 const response = await fetch(`http://localhost:3000/${resource}/${id}`)
                 if (!response.ok) {
@@ -17,11 +18,11 @@ export const useFetchId = (resource, id) => {
             } catch (error) {
                 console.error(`Error cargando ${resource}: `, error)
             } finally {
-                setLoading(false)
+                setIsLoading(false)
             }
         }
         fetchMovie()
     }, [resource, id])
 
-    return { dataId, loading }
+    return { dataId, isLoading }
 }

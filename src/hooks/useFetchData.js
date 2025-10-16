@@ -1,14 +1,15 @@
 import { useEffect, useState } from "react"
+import { useLoading } from "../context/LoadingContext"
 
 export const useFetchData = ( resource, filters = {} ) => {
     const [data, setData] = useState([])
-    const [loading, setLoading] = useState(false)
+    const { isLoading, setIsLoading } = useLoading()
 
     useEffect(() => {
         if(!resource) return 
 
         const fetchData = async () => {
-            setLoading(true)
+            setIsLoading(true)
             try {
                 const queryParams = new URLSearchParams(filters).toString()
                 const response = await fetch(`http://localhost:3000/${resource}${queryParams ? `?${queryParams}` : ""}`)
@@ -21,11 +22,11 @@ export const useFetchData = ( resource, filters = {} ) => {
             } catch(e) {
                 console.error(`Error al cargar ${resource}: `, e)
             } finally {
-                setLoading(false)
+                setIsLoading(false)
             }
         }
         fetchData()
     }, [resource, JSON.stringify(filters)])
 
-    return { data, loading }
+    return { data, isLoading }
 }
