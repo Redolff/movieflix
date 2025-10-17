@@ -12,7 +12,7 @@ export const Register = () => {
         lastName: "",
         email: "",
         password: "",
-        confirmPassword: "",
+        repeatPassword: "",
     });
 
     const handleChange = (e) => {
@@ -22,7 +22,6 @@ export const Register = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-
         if (!formData.firstName.trim() || formData.firstName.length <= 3) {
             return toast.warning("El nombre es obligatorio y debe tener más de 3 letras");
         }
@@ -35,7 +34,7 @@ export const Register = () => {
         if (!formData.password.trim()) {
             return toast.warning("La contraseña es obligatoria");
         }
-        if (formData.password !== formData.confirmPassword) {
+        if (formData.password !== formData.repeatPassword) {
             return toast.error("Las contraseñas no coinciden");
         }
 
@@ -90,9 +89,9 @@ export const Register = () => {
                     />
                     <input
                         type="password"
-                        name="confirmPassword"
+                        name="repeatPassword"
                         placeholder="Repetir contraseña"
-                        value={formData.confirmPassword}
+                        value={formData.repeatPassword}
                         onChange={handleChange}
                         className="login-input"
                     />
