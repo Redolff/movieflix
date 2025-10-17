@@ -6,7 +6,7 @@ import { useAuth } from '../../context/AuthContext';
 
 export const Register = () => {
     const navigate = useNavigate();
-    const { login } = useAuth(); 
+    const { register } = useAuth();
     const [formData, setFormData] = useState({
         firstName: "",
         lastName: "",
@@ -20,33 +20,46 @@ export const Register = () => {
         setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+<<<<<<< HEAD
         if (!formData.firstName.trim() || formData.firstName.length <= 3) {
+=======
+
+        const { firstName, lastName, email, password, confirmPassword } = formData
+
+        if (!firstName.trim() || firstName.length <= 3) {
+>>>>>>> 8f6c3416da635aa7e0f030f01fe9e1c31fa4be88
             return toast.warning("El nombre es obligatorio y debe tener más de 3 letras");
         }
-        if (!formData.lastName.trim() || formData.lastName.length <= 3) {
+        if (!lastName.trim() || lastName.length <= 3) {
             return toast.warning("El apellido es obligatorio y debe tener más de 3 letras");
         }
-        if (!formData.email.trim() || !formData.email.includes('@')) {
+        if (!email.trim() || !email.includes('@')) {
             return toast.warning("El email es obligatorio y debe contener @");
         }
-        if (!formData.password.trim()) {
-            return toast.warning("La contraseña es obligatoria");
+        if (!password.trim() || !confirmPassword.trim()) {
+            return toast.warning("La contraseña es obligatoria")
         }
+<<<<<<< HEAD
         if (formData.password !== formData.repeatPassword) {
+=======
+        if (!/[A-Z]/.test(password) || !/[a-z]/.test(password)) {
+            return toast.warning("La contraseña debe contener al menos una letra mayúscula y una minúscula");
+        }
+        if (password !== confirmPassword) {
+>>>>>>> 8f6c3416da635aa7e0f030f01fe9e1c31fa4be88
             return toast.error("Las contraseñas no coinciden");
         }
 
-        // Simulación de registro
-        login({
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            email: formData.email,
-            role: "user", // todos los que se registran van como user
-        });
-
-        navigate("/profiles"); // Redirigir a perfiles después de registrarse
+        const result = await register(firstName, lastName, email, password)
+        console.log('RESULT: ', result)
+        if (result.success) {
+            navigate('/profiles')
+            toast.success(result.message)
+        } else {
+            toast.error(result.message)
+        }
     };
 
     return (

@@ -14,8 +14,8 @@ export const SerieDetail = () => {
     const [isEditing, setIsEditing] = useState(false)
     const [formData, setFormData] = useState(null)
     const [showConfirmDelete, setShowConfirmDelete] = useState(false)
-    const { handleDelete } = useDeleteData("series", id)
-    const { handleUpdate } = useUpdateData("series", id)
+    const { handleDelete } = useDeleteData("series")
+    const { handleUpdate } = useUpdateData("series")
     const { user } = useAuth()
 
     const handleEditClick = () => {
@@ -50,12 +50,15 @@ export const SerieDetail = () => {
                 .filter(Boolean);
         }
 
-        handleUpdate(plainData, {
-            onSucces: (updatedSerie) => {
+        handleUpdate(id, plainData, {
+            onSuccess: (updatedSerie) => {
                 setFormData(null);
                 setIsEditing(false);
                 Object.assign(serie, updatedSerie);
             },
+            onError: (error) => {
+                console.error(error)
+            }
         });
     }
 
@@ -197,7 +200,7 @@ export const SerieDetail = () => {
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <h2>¿Seguro que deseas eliminar esta película?</h2>
                         <div className="modal-actions">
-                            <button className="btn btn-danger" onClick={handleDelete}>Sí, eliminar</button>
+                            <button className="btn btn-danger" onClick={() => handleDelete(id)}>Sí, eliminar</button>
                             <button className="btn btn-outline" onClick={() => setShowConfirmDelete(false)}>Cancelar</button>
                         </div>
                     </div>

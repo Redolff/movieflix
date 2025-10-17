@@ -14,8 +14,8 @@ export const GameDetail = () => {
     const [isEditing, setIsEditing] = useState(false)
     const [formData, setFormData] = useState(null)
     const [showConfirmDelete, setShowConfirmDelete] = useState(false)
-    const { handleDelete } = useDeleteData("games", id)
-    const { handleUpdate } = useUpdateData("games", id)
+    const { handleDelete } = useDeleteData("games")
+    const { handleUpdate } = useUpdateData("games")
     const { user } = useAuth()
 
     const handleEditClick = () => {
@@ -59,12 +59,15 @@ export const GameDetail = () => {
                 .filter(Boolean);
         }
 
-        handleUpdate(plainData, {
-            onSucces: (updatedGame) => {
+        handleUpdate(id, plainData, {
+            onSuccess: (updatedGame) => {
                 setFormData(null);
                 setIsEditing(false);
                 Object.assign(game, updatedGame);
             },
+            onerror: (error) => {
+                console.error(error)
+            }
         });
     }
 
@@ -194,7 +197,6 @@ export const GameDetail = () => {
                 )}
                 <div className='movie-actions'>
                     <GameActions game={game} />
-                    {/* Solo admins ven este botón */}
                     {user?.role === "admin" && (
                         <div className='movie-actions-bottom'>
                             {isEditing ? (
@@ -225,7 +227,7 @@ export const GameDetail = () => {
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <h2>¿Seguro que deseas eliminar esta película?</h2>
                         <div className="modal-actions">
-                            <button className="btn btn-danger" onClick={handleDelete}>Sí, eliminar</button>
+                            <button className="btn btn-danger" onClick={() => handleDelete(id)}>Sí, eliminar</button>
                             <button className="btn btn-outline" onClick={() => setShowConfirmDelete(false)}>Cancelar</button>
                         </div>
                     </div>

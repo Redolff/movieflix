@@ -1,6 +1,8 @@
 import './App.css'
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 
+import { ToastContainer } from 'react-toastify'
+import { useState } from 'react'
 import { Navbar } from './components/navbar/Navbar'
 import { Inicio } from './pages/Inicio'
 import { Movies } from './pages/movies/Movies'
@@ -10,8 +12,6 @@ import { SerieDetail } from './pages/series/SerieDetail'
 import { Games } from './pages/games/Games'
 import { GameDetail } from './pages/games/GameDetail'
 import { Mylist } from './pages/Mylist'
-import { ToastContainer } from 'react-toastify'
-import { useState } from 'react'
 import { AdminLayout } from './pages/admin/layout/AdminLayout'
 import { Dashboard } from './pages/admin/dashboard/Dashboard'
 import { MoviesAdmin } from './pages/admin/movies/MoviesAdmin'
@@ -23,56 +23,65 @@ import { Register } from './pages/login/Register'
 import { ProtectedRoute } from './pages/ProtectedRoute'
 import { Profiles } from './pages/Profiles'
 import { AuthProvider } from './context/AuthContext'
+import { LoadingProvider } from './context/LoadingContext'
 
 function App() {
   const [query, setQuery] = useState("")
 
   return (
     <Router>
-      <AuthProvider>
+      <LoadingProvider>
+        <AuthProvider>
 
-        <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
-        <Navbar query={query} setQuery={setQuery} />
-        <Routes>
-          <Route path='/' element={<Inicio query={query} />} />
-          <Route path='/register' element={<Register /> } />
-          <Route path='/login' element={<Login />} />
-          <Route path='/profiles' element={<Profiles />} />
+          <ToastContainer position="top-right" autoClose={3000} hideProgressBar={false} />
+          <Navbar query={query} setQuery={setQuery} />
+          <Routes>
+            <Route path='/' element={<Inicio query={query} />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/profiles'
+              element={
+                <ProtectedRoute>
+                  <Profiles />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route path='/admin'
-            element={
-              <ProtectedRoute adminOnly>
-                <AdminLayout />
-              </ProtectedRoute>
-            }>
-            <Route index element={<Dashboard />} />
-            <Route path='movies' element={<MoviesAdmin />} />
-            <Route path='series' element={<SeriesAdmin />} />
-            <Route path='games' element={<GamesAdmin />} />
-            <Route path='users' element={<UsersAdmin />} />
-          </Route>
+            <Route path='/admin'
+              element={
+                <ProtectedRoute adminOnly>
+                  <AdminLayout />
+                </ProtectedRoute>
+              }>
+              <Route index element={<Dashboard />} />
+              <Route path='movies' element={<MoviesAdmin />} />
+              <Route path='series' element={<SeriesAdmin />} />
+              <Route path='games' element={<GamesAdmin />} />
+              <Route path='users' element={<UsersAdmin />} />
+            </Route>
 
-          <Route path='/movies' element={<Movies />} />
-          <Route path='/movies/:id' element={<MovieDetail />} />
+            <Route path='/movies' element={<Movies />} />
+            <Route path='/movies/:id' element={<MovieDetail />} />
 
-          <Route path='/series' element={<Series />} />
-          <Route path='/series/:id' element={<SerieDetail />} />
+            <Route path='/series' element={<Series />} />
+            <Route path='/series/:id' element={<SerieDetail />} />
 
-          <Route path='/games' element={<Games />} />
-          <Route path='/games/:id' element={<GameDetail />} />
+            <Route path='/games' element={<Games />} />
+            <Route path='/games/:id' element={<GameDetail />} />
 
-          <Route path='/mylist'
-            element={
-              <ProtectedRoute>
-                <Mylist />
-              </ProtectedRoute>
-            }
-          />
+            <Route path='/mylist'
+              element={
+                <ProtectedRoute>
+                  <Mylist />
+                </ProtectedRoute>
+              }
+            />
 
-          <Route path='*' element={<Navigate to={'/'} />} />
-        </Routes>
+            <Route path='*' element={<Navigate to={'/'} />} />
+          </Routes>
 
-      </AuthProvider>
+        </AuthProvider>
+      </LoadingProvider>
     </Router>
   )
 }

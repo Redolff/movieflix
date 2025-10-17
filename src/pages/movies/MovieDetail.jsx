@@ -10,13 +10,13 @@ import { useAuth } from '../../context/AuthContext'
 
 export const MovieDetail = () => {
     const { id } = useParams()
+    const { user } = useAuth()
     const { dataId: movie, loading } = useFetchId("movies", id)
-    const { handleDelete } = useDeleteData("movies", id)
-    const { handleUpdate } = useUpdateData("movies", id)
+    const { handleDelete } = useDeleteData("movies")
+    const { handleUpdate } = useUpdateData("movies")
     const [isEditing, setIsEditing] = useState(false)
     const [formData, setFormData] = useState(null)
     const [showConfirmDelete, setShowConfirmDelete] = useState(false)
-    const { user } = useAuth()
 
     const handleEditClick = () => {
         setFormData({ ...movie }) 
@@ -49,12 +49,15 @@ export const MovieDetail = () => {
                 .filter(Boolean);
         }
 
-        handleUpdate(plainData, {
-            onSucces: (updatedMovie) => {
+        handleUpdate(id, plainData, {
+            onSuccess: (updatedMovie) => {
                 setFormData(null);
                 setIsEditing(false);
                 Object.assign(movie, updatedMovie);
             },
+            onError: (error) => {
+                console.error(error)
+            }
         });
     }
 
@@ -153,7 +156,6 @@ export const MovieDetail = () => {
                 )}
                 <div className="movie-actions">
                     <MovieActions movie={movie} />
-                    {/* Solo admins ven este botón */}
                     {user?.role === "admin" && (
                         <div className='movie-actions-bottom'>
                             {isEditing ? (
@@ -185,7 +187,7 @@ export const MovieDetail = () => {
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <h2>¿Seguro que deseas eliminar esta película?</h2>
                         <div className="modal-actions">
-                            <button className="btn btn-danger" onClick={handleDelete}>Sí, eliminar</button>
+                            <button className="btn btn-danger" onClick={() => handleDelete(id)}>Sí, eliminar</button>
                             <button className="btn btn-outline" onClick={() => setShowConfirmDelete(false)}>Cancelar</button>
                         </div>
                     </div>
