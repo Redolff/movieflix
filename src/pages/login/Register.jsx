@@ -12,7 +12,7 @@ export const Register = () => {
         lastName: "",
         email: "",
         password: "",
-        confirmPassword: "",
+        repeatPassword: "",
     });
 
     const handleChange = (e) => {
@@ -94,9 +94,9 @@ export const Register = () => {
                     />
                     <input
                         type="password"
-                        name="confirmPassword"
+                        name="repeatPassword"
                         placeholder="Repetir contraseña"
-                        value={formData.confirmPassword}
+                        value={formData.repeatPassword}
                         onChange={handleChange}
                         className="login-input"
                     />
