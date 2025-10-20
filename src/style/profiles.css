@@ -21,20 +21,27 @@
 /* Grid de perfiles */
 .profiles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, 150px);
+  justify-content: center;
+  gap: 1rem;
   max-width: 600px;
   width: 100%;
-  margin-bottom: 2rem;
+  margin-bottom: 2rem
 }
 
 /* Card de perfil */
 .profile-card {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   cursor: pointer;
   transition: transform 0.2s ease-in-out;
+
+  width: 150px;
+  /* mismo que avatar */
+  height: 200px;
+  /* un poco más alto para el nombre */
 }
 
 .profile-card:hover {
@@ -75,7 +82,8 @@
   border: 2px dashed #555;
   border-radius: 8px;
   justify-content: center;
-  padding: 1rem;
+  width: 160px;  
+  height: 160px;
 }
 
 .add-profile:hover {
@@ -95,7 +103,7 @@
   color: #bbb;
   font-weight: bold;
   border: 1px solid #555;
-  padding: 0.6rem 1.5rem;
+  padding: 1rem 1.5rem;
   border-radius: 6px;
   cursor: pointer;
   transition: all 0.3s ease-in-out;
@@ -105,4 +113,19 @@
   background-color: #333;
   color: white;
   border-color: white;
+}
+
+.delete-profile-btn {
+  background: none;
+  border: none;
+  color: #e50914; /* rojo Netflix-style */
+  font-size: 1.5rem;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+
+.delete-profile-btn:hover {
+  color: #ff4c4c;
+  transform: scale(1.2);
 }

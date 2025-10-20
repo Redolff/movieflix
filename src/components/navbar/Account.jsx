@@ -1,18 +1,23 @@
 import '../../style/account.css'
 import { useRef, useState } from 'react'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
 
 export const Account = () => {
+    const navigate = useNavigate()
+    const { user, isAuthenticated, logout } = useAuth()
     const [openUserMenu, setOpenUserMenu] = useState(false)
     const userIconRef = useRef(null)
     const userMenuRef = useRef(null)
 
     useOutsideClick([userIconRef, userMenuRef], () => setOpenUserMenu(false))
 
-    const { user, isAuthenticated, logout } = useAuth()
-
+    const handleLogout = () => {
+        logout()
+        navigate('/login')
+    }
+ 
     return (
         <li
             ref={userIconRef}
@@ -43,7 +48,7 @@ export const Account = () => {
                             </NavLink>
 
                             <hr />
-                            <div className="user-item logout" onClick={logout}>
+                            <div className="user-item logout" onClick={handleLogout}>
                                 Cerrar sesión
                             </div>
                         </>

@@ -61,6 +61,7 @@ export const AuthProvider = ({ children }) => {
     })
 
     const data = await response.json()
+    console.log('DATA: ', data)
 
     if (response.ok) {
       saveUserToLocalStorage(data.user)
