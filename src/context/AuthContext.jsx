@@ -8,12 +8,20 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const storedUser = JSON.parse(localStorage.getItem('user-movieflix'))
-    if (storedUser) {
-      setUser(storedUser)
-      setIsAuthenticated(true)
+    const storedGetUser = localStorage.getItem('user-movieflix')
+    if (storedGetUser) {
+      try {
+        const storedUser = JSON.parse(storedGetUser)
+        setUser(storedUser)
+        setIsAuthenticated(true)
+      } catch (error) {
+        console.error("Error al parsear el usuario de localStorage", error)
+        localStorage.removeItem('user-movieflix')
+        setUser(null)
+        setIsAuthenticated(false)
+      }
     }
-    setLoading(false); // terminó de cargar
+    setLoading(false)
   }, [])
 
   const saveUserToLocalStorage = (user) => {
@@ -61,7 +69,6 @@ export const AuthProvider = ({ children }) => {
     })
 
     const data = await response.json()
-    console.log('DATA: ', data)
 
     if (response.ok) {
       saveUserToLocalStorage(data.user)
@@ -89,8 +96,13 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const updatedUser = (updateUser) => {
+    setUser(updateUser)
+    localStorage.setItem('user-movieflix', JSON.stringify(updatedUser))
+  }
+
   return (
-    <AuthContext.Provider value={{ user, register, login, logout, isAuthenticated, loading }}>
+    <AuthContext.Provider value={{ user, updatedUser, register, login, logout, isAuthenticated, loading }}>
       {children}
     </AuthContext.Provider>
   );

@@ -21,7 +21,7 @@ export const Mylist = () => {
             ],
             rate: 8.0,
             trailerUrl: "https://www.youtube.com/watch?v=zzayf9GpXCI",
-            resource: "serie",
+            category: "serie",
         },
         {
             id: "ed2f9c3a-6e94-44cd-a9c6-7a2343bb8b10",
@@ -35,7 +35,7 @@ export const Mylist = () => {
             ],
             rate: 8.1,
             trailerUrl: "https://www.youtube.com/watch?v=UNFUzrVrmgQ",
-            resource: "movie"
+            category: "movie"
         },
         {
             id: "b9f7a2e4-1f7c-41e9-a0de-f9a45a92251b",
@@ -54,13 +54,13 @@ export const Mylist = () => {
             multiplayer: false,
             rating: 9.6,
             poster: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTEmHlaYwsOI5Bdtt7HY5TzBP4RCBLsB9sN2w&s",
-            resource: "game"
+            category: "game"
         }
     ]
 
-    const movies = myList.filter(item => item.resource === "movie")
-    const series = myList.filter(item => item.resource === "serie")
-    const games = myList.filter(item => item.resource === "game")
+    const movies = myList.filter(item => item.category === "movie")
+    const series = myList.filter(item => item.category === "serie")
+    const games = myList.filter(item => item.category === "game")
 
     return (
         <div className="container-my-list">
