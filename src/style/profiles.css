@@ -21,12 +21,12 @@
 /* Grid de perfiles */
 .profiles-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, 150px);
+  grid-template-columns: repeat(4, 1fr);
   justify-content: center;
   gap: 1rem;
-  max-width: 600px;
+  max-width: 640px;
   width: 100%;
-  margin-bottom: 2rem
+  margin-bottom: 2rem;
 }
 
 /* Card de perfil */
@@ -36,6 +36,7 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  margin-top: 10px;
   transition: transform 0.2s ease-in-out;
   width: 150px;
   /* mismo que avatar */
@@ -95,24 +96,6 @@
   font-size: 2.5rem;
   font-weight: bold;
   color: #fff;
-}
-
-/* Botón para administrar perfiles */
-.manage-profiles-btn {
-  background-color: transparent;
-  color: #bbb;
-  font-weight: bold;
-  border: 1px solid #555;
-  padding: 1rem 1.5rem;
-  border-radius: 6px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-
-.manage-profiles-btn:hover {
-  background-color: #333;
-  color: white;
-  border-color: white;
 }
 
 .delete-profile-btn {
@@ -229,4 +212,65 @@
 .modal-actions {
     display: flex;
     gap: 10px;
+}
+
+/* SKELETO DE PROFILES */
+
+/* Card del esqueleto */
+.skeleton-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Avatar simulado */
+.skeleton-avatar {
+  width: 150px;
+  height: 150px;
+  border-radius: 8px;
+  background: #222;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Nombre simulado */
+.skeleton-name {
+  width: 70%;
+  height: 14px;
+  background: #222;
+  margin-top: 0.7rem;
+  border-radius: 4px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animación de brillo */
+.shimmer {
+  background: linear-gradient(
+    110deg,
+    #222 8%,
+    #333 18%,
+    #222 33%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@keyframes shimmer {
+  to {
+    background-position-x: -200%;
+  }
+}
+
+/* Estilo Responsive */
+@media (max-width: 800px) {
+  .profiles-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 500px) {
+  .profiles-grid {
+    grid-template-columns: 1fr;
+  }
 }

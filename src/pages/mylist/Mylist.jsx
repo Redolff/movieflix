@@ -1,10 +1,12 @@
-import { Carrousels } from "../components/Carrousels"
-import { Game } from "../components/games/Game"
-import { Movie } from "../components/movies/Movie"
-import { Serie } from "../components/series/Serie"
+import { Carrousels } from "../../components/Carrousels"
+import { Game } from "../../components/games/Game"
+import { Movie } from "../../components/movies/Movie"
+import { Serie } from "../../components/series/Serie"
 
 export const Mylist = () => {
 
+    const profiles = profiles.map((x) => console.log('PROFILE MY LIST', x.myList.movies))
+    
     const myList = [
         {
             id: "s15-1v2w-3x4y-5z6a-543bc210de15",

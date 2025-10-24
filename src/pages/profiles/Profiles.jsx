@@ -1,68 +1,43 @@
-import "../style/profiles.css"
-import { useAuth } from "../context/AuthContext"
+import "../../style/profiles.css"
+import { useAuth } from "../../context/AuthContext"
 import { toast } from "react-toastify"
 import { useState } from "react"
+import { useFetchId } from "../../hooks/useFetchid"
+import { ProfileSkeleton } from "./ProfileSkeleton"
+import { useAddProfile } from "../../hooks/useAddProfile"
+import { useDeleteProfile } from "../../hooks/useDeleteProfile"
 
 export const Profiles = () => {
-    const { user, updatedUser } = useAuth()
+    const { user } = useAuth()
+    const { dataId: profiles, loading, refetch } = useFetchId("profiles", user._id)
+    const { handleAddProfile } = useAddProfile("profiles", user._id)
+    const { handleDeleteProfile } = useDeleteProfile("profiles", user._id)
+    
     const [showModal, setShowModal] = useState(false)
-    const [formData, setFormData] = useState({
-        name: "",
-        avatar: ""
-    })
+    const [formData, setFormData] = useState({ name: "", avatar: "" })
 
-    const handleAddProfile = async (data) => {
-        try {
-            const response = await fetch(`http://localhost:3000/profiles/${user._id}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(data)
-            })
-            if (!response.ok) throw new Error(`Error al agregar el Perfil`)
-            const newProfile = await response.json()
-            toast.success("Perfil agregado correctamente")
-            const newUser = {
-                ...user,
-                profiles: [...user.profiles, newProfile]
-            }
-            updatedUser(newUser)
-            setShowModal(false)
-            setFormData({ name: "", avatar: "" })
-
-        } catch (error) {
-            console.error(error)
-            toast.error(`Hubo un problema al agregar el perfil`)
-        }
-    }
-
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
         if (!formData.name.trim() || !formData.avatar.trim()) {
             toast.warning("Completá todos los campos")
             return;
         }
-        handleAddProfile(formData)
+        
+        await handleAddProfile(formData)
+        refetch()
+        setShowModal(false)
+        setFormData({ name: '', avatar: '' })
     }
 
-    const handleDeleteProfile = async (profileId) => {
-        try {
-            const response = await fetch(`http://localhost:3000/profiles/${user._id}/${profileId}`, {
-                method: 'DELETE'
-            })
-            if(!response.ok) throw new Error(`Error al eliminar el perfil`)
-            toast.success(`Perfil eliminado correctamente`)
-            const newUser = {
-                ...user,
-                profiles: user.profiles.filter(p => p._id !== profileId)
-            }
-            updatedUser(newUser)
-            
-        } catch(error) {
-            console.error(error)
-            toast.error(`Hubo un problema al eliminar el perfil`)
-        }
+    const deleteProfile = async (profileId) => {
+        await handleDeleteProfile(profileId)
+        refetch()
+    }
+
+    if (loading || !Array.isArray(profiles)) {
+        return (
+            <ProfileSkeleton />
+        )
     }
 
     return (
@@ -70,7 +45,7 @@ export const Profiles = () => {
             <h1 className="account-title">¿Quién está mirando ahora?</h1>
 
             <section className="profiles-grid">
-                {user.profiles.map((profile) => (
+                {profiles.map((profile) => (
                     <div key={profile._id} className="profile-card">
                         <div className="avatar-container">
                             <img
@@ -82,14 +57,14 @@ export const Profiles = () => {
                         <p className="profile-name">{profile.name}</p>
                         <button
                             className="delete-profile-btn"
-                            onClick={() => handleDeleteProfile(profile._id)}
+                            onClick={() => deleteProfile(profile._id)}
                         >
                             <i className="fa-solid fa-trash"></i>
                         </button>
                     </div>
                 ))}
 
-                {user.profiles.length < 4 && (
+                {profiles.length < 4 && (
                     <div className="profile-card add-profile" onClick={() => setShowModal(true)}>
                         <div className="avatar-container">
                             <span className="plus-sign">+</span>
@@ -99,7 +74,7 @@ export const Profiles = () => {
                 )}
             </section>
 
-            { /* Modal de formulario para agregar PERFIL */ }
+            { /* Modal de formulario para agregar PERFIL */}
             {showModal && (
                 <div className="form-modal-overlay">
                     <div className="form-modal-content">

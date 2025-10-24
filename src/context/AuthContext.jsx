@@ -96,9 +96,9 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
-  const updatedUser = (updateUser) => {
-    setUser(updateUser)
-    localStorage.setItem('user-movieflix', JSON.stringify(updatedUser))
+  const updatedUser = (newUser) => {
+    setUser(newUser)
+    localStorage.setItem('user-movieflix', JSON.stringify(newUser))
   }
 
   return (
