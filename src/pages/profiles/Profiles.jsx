@@ -1,20 +1,43 @@
 import "../../style/profiles.css"
 import { useAuth } from "../../context/AuthContext"
 import { toast } from "react-toastify"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useFetchId } from "../../hooks/useFetchid"
 import { ProfileSkeleton } from "./ProfileSkeleton"
 import { useAddProfile } from "../../hooks/useAddProfile"
 import { useDeleteProfile } from "../../hooks/useDeleteProfile"
+import { useDispatch, useSelector } from 'react-redux'
+import { setProfile } from "../../slices/profileSlice"
+import { useNavigate } from "react-router-dom"
+import { useFetchProfileId } from "../../hooks/useFetcProfileId"
 
 export const Profiles = () => {
+    const navigate = useNavigate()
+    const dispatch = useDispatch()
+    const currentProfile = useSelector((state) => state.currentProfile)
+
     const { user } = useAuth()
-    const { dataId: profiles, loading, refetch } = useFetchId("profiles", user._id)
+    const { dataId: allProfiles, loading, refetch } = useFetchId("profiles", user._id)
     const { handleAddProfile } = useAddProfile("profiles", user._id)
     const { handleDeleteProfile } = useDeleteProfile("profiles", user._id)
-    
+
     const [showModal, setShowModal] = useState(false)
     const [formData, setFormData] = useState({ name: "", avatar: "" })
+    const [selectedProfile, setSelectedProfile] = useState(null)
+
+    const { profile: selectedProfileId } = useFetchProfileId(user._id, selectedProfile)
+
+    const handleSelect = (profileId) => {
+        setSelectedProfile(profileId)
+    }
+
+    useEffect(() => {
+        if (selectedProfileId) {
+            console.log("Perfil seleccionado:", selectedProfileId)
+            dispatch(setProfile(selectedProfileId))
+            navigate('/')
+        }
+    }, [selectedProfileId, dispatch, navigate])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -22,7 +45,7 @@ export const Profiles = () => {
             toast.warning("Completá todos los campos")
             return;
         }
-        
+
         await handleAddProfile(formData)
         refetch()
         setShowModal(false)
@@ -34,7 +57,7 @@ export const Profiles = () => {
         refetch()
     }
 
-    if (loading || !Array.isArray(profiles)) {
+    if (loading || !Array.isArray(allProfiles)) {
         return (
             <ProfileSkeleton />
         )
@@ -45,26 +68,33 @@ export const Profiles = () => {
             <h1 className="account-title">¿Quién está mirando ahora?</h1>
 
             <section className="profiles-grid">
-                {profiles.map((profile) => (
-                    <div key={profile._id} className="profile-card">
-                        <div className="avatar-container">
-                            <img
-                                src={profile.avatar}
-                                alt={profile.name}
-                                className="profile-avatar"
-                            />
-                        </div>
-                        <p className="profile-name">{profile.name}</p>
-                        <button
-                            className="delete-profile-btn"
-                            onClick={() => deleteProfile(profile._id)}
-                        >
-                            <i className="fa-solid fa-trash"></i>
-                        </button>
-                    </div>
-                ))}
+                {allProfiles.map((profile) => {
+                    const isSelected = currentProfile && currentProfile._id === profile._id
 
-                {profiles.length < 4 && (
+                    return (
+                        <div key={profile._id} className={`profile-card ${isSelected ? 'selected' : ''}`} onClick={() => handleSelect(profile._id)}>
+                            <div className="avatar-container">
+                                <img
+                                    src={profile.avatar}
+                                    alt={profile.name}
+                                    className="profile-avatar"
+                                />
+                            </div>
+                            <p className="profile-name">{profile.name}</p>
+                            <button
+                                className="delete-profile-btn"
+                                onClick={(e) => {
+                                    e.stopPropagation(),
+                                        deleteProfile(profile._id)
+                                }}
+                            >
+                                <i className="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+                    )}
+                )}
+
+                {allProfiles.length < 4 && (
                     <div className="profile-card add-profile" onClick={() => setShowModal(true)}>
                         <div className="avatar-container">
                             <span className="plus-sign">+</span>

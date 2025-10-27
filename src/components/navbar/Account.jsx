@@ -3,10 +3,15 @@ import { useRef, useState } from 'react'
 import { useOutsideClick } from '../../hooks/useOutsideClick'
 import { NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../../context/AuthContext'
+import { useDispatch, useSelector } from 'react-redux'
+import { clearProfile } from '../../slices/profileSlice'
 
 export const Account = () => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const { user, isAuthenticated, logout } = useAuth()
+    const currentProfile = useSelector((state) => state.currentProfile)
     const [openUserMenu, setOpenUserMenu] = useState(false)
     const userIconRef = useRef(null)
     const userMenuRef = useRef(null)
@@ -14,6 +19,7 @@ export const Account = () => {
     useOutsideClick([userIconRef, userMenuRef], () => setOpenUserMenu(false))
 
     const handleLogout = () => {
+        dispatch(clearProfile())
         logout()
         navigate('/login')
     }
@@ -34,7 +40,12 @@ export const Account = () => {
                         <>
                             {/* Nombre del usuario logueado */}
                             <div className="user-item">
-                                <span>{user?.firstName} {user?.lastName}</span>
+                                <span>
+                                    {currentProfile?.name 
+                                        ? `${currentProfile.name} (${user.lastName})`
+                                        : `${user?.firstName} ${user?.lastName}`
+                                    }
+                                </span>
                             </div>
 
                             {user?.role === 'admin' && (

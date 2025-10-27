@@ -44,6 +44,18 @@
   /* un poco más alto para el nombre */
 }
 
+/* Card seleccionada de Perfil */
+.profile-card.selected {
+  transform: scale(1.05);
+  transition: all 0.2s ease;
+}
+
+.profile-card.selected .profile-name {
+  font-weight: bold;
+  color: #ffcc00;
+  border-bottom: 2px solid #ffcc00;
+}
+
 .profile-card:hover {
   transform: scale(1.05);
 }

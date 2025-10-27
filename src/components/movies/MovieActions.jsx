@@ -2,11 +2,19 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { addToMyLIst } from "../../slices/profileSlice";
 
 export const MovieActions = ({ movie }) => {
-    const [showTrailer, setShowTrailer] = useState(false)
-    const { isAuthenticated } = useAuth()
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    const { isAuthenticated } = useAuth()
+    const currentProfile = useSelector((state) => state.currentProfile)
+
+    const [showTrailer, setShowTrailer] = useState(false)
+
+    const myListProfile = currentProfile?.myList?.movies?.some(m => m._id === movie._id);
 
     const handleReproduce = () => {
         if (!movie.trailerUrl) {
@@ -15,6 +23,21 @@ export const MovieActions = ({ movie }) => {
         }
         setShowTrailer(true)
     }
+
+    const handleAddOrRemove = () => {
+        if (!currentProfile?._id) {
+            toast.warning("Seleccioná un perfil primero");
+            return;
+        }
+
+        dispatch(addToMyLIst({ type: 'movies', item: movie }));
+
+        toast.success(
+            myListProfile
+                ? "Pelicula eliminada de mi lista"
+                : "Pelicula agregada a mi lista"
+        );
+    };
 
     return (
         <div className='movie-actions-top'>
@@ -62,9 +85,9 @@ export const MovieActions = ({ movie }) => {
                 ? (
                     <button
                         className="add-btn"
-                        onClick={() => console.log('Agregar a mi lista: ', movie)}
+                        onClick={handleAddOrRemove}
                     >
-                        <i className="fa-solid fa-plus"></i>
+                        <i className={`fa-solid ${myListProfile ? 'fa-minus' : 'fa-plus'}`}></i>
                         Mi lista
                     </button>
                 )

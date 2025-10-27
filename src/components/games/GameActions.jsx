@@ -1,9 +1,32 @@
 import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
+import { toast } from "react-toastify"
+import { useDispatch, useSelector } from "react-redux"
+import { addToMyLIst } from "../../slices/profileSlice"
 
 export const GameActions = ({ game }) => {
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
     const { isAuthenticated } = useAuth()
+    const currentProfile = useSelector((state) => state.currentProfile)
+
+    const myListProfile = currentProfile?.myList?.games?.some(m => m._id === game._id);
+
+    const handleAddOrRemove = () => {
+        if (!currentProfile?._id) {
+            toast.warning("Seleccioná un perfil primero");
+            return;
+        }
+
+        dispatch(addToMyLIst({ type: 'games', item: game }));
+
+        toast.success(
+            myListProfile
+                ? "Juego eliminada de mi lista"
+                : "Juego agregada a mi lista"
+        );
+    };
 
     const handleBuy = () => {
         console.log('Comprar: ', game)
@@ -36,7 +59,7 @@ export const GameActions = ({ game }) => {
                     (
                         <button
                             className="add-btn"
-                            onClick={() => console.log('Agregar a mi lista: ', game)}
+                            onClick={handleAddOrRemove}
                         >
                             <i className="fa-solid fa-plus"></i>
                             Mi lista
