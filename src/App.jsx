@@ -71,7 +71,7 @@ function App() {
 
             <Route path='/mylist'
               element={
-                <ProtectedRoute>
+                <ProtectedRoute requiresProfile={true}>
                   <Mylist />
                 </ProtectedRoute>
               }
