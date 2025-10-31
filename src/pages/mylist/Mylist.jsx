@@ -16,22 +16,19 @@ export const Mylist = () => {
             <Carrousels
                 title="Mis Películas"
                 items={movies}
-                key={movies._id}
                 renderItem={(movie) => <Movie movie={movie} key={movie._id} />}
             />
 
             <Carrousels
                 title="Mis Series"
                 items={series}
-                key={series._id}
-                renderItem={(serie) => <Serie serie={serie} key={serie.id} />}
+                renderItem={(serie) => <Serie serie={serie} key={serie._id} />}
             />
 
             <Carrousels
                 title="Mis Juegos"
                 items={games}
-                key={games._id}
-                renderItem={(game) => <Game game={game} key={game.id} />}
+                renderItem={(game) => <Game game={game} key={game._id} />}
             />
         </div>
     )

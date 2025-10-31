@@ -33,9 +33,8 @@ export const Profiles = () => {
 
     useEffect(() => {
         if (selectedProfileId) {
-            console.log("Perfil seleccionado:", selectedProfileId)
             dispatch(setProfile(selectedProfileId))
-            navigate('/')
+            navigate('/mylist')
         }
     }, [selectedProfileId, dispatch, navigate])
 

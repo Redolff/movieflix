@@ -3,29 +3,39 @@ import { useAuth } from "../../context/AuthContext"
 import { toast } from "react-toastify"
 import { useDispatch, useSelector } from "react-redux"
 import { addToMyLIst } from "../../slices/profileSlice"
+import { useUpdateMyList } from "../../hooks/useUpdateMyList"
 
 export const GameActions = ({ game }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { isAuthenticated } = useAuth()
+    const { user, isAuthenticated } = useAuth()
     const currentProfile = useSelector((state) => state.currentProfile)
+    const { updatedMyList } = useUpdateMyList()
 
     const myListProfile = currentProfile?.myList?.games?.some(m => m._id === game._id);
 
-    const handleAddOrRemove = () => {
+    const handleAddOrRemove = async () => {
         if (!currentProfile?._id) {
             toast.warning("Seleccioná un perfil primero");
             return;
         }
 
-        dispatch(addToMyLIst({ type: 'games', item: game }));
+        const updated = await updatedMyList({
+            userId: user._id,
+            profileId: currentProfile._id,
+            category: 'games',
+            item: game
+        })
 
-        toast.success(
-            myListProfile
-                ? "Juego eliminada de mi lista"
-                : "Juego agregada a mi lista"
-        );
+        if (updated) {
+            dispatch(addToMyLIst({ type: 'games', item: game }));
+            toast.success(
+                myListProfile
+                    ? "Juego eliminada de mi lista"
+                    : "Juego agregada a mi lista"
+            );
+        }
     };
 
     const handleBuy = () => {

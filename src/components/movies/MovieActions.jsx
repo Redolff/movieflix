@@ -4,13 +4,15 @@ import { useAuth } from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { addToMyLIst } from "../../slices/profileSlice";
+import { useUpdateMyList } from "../../hooks/useUpdateMyList";
 
 export const MovieActions = ({ movie }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { isAuthenticated } = useAuth()
+    const { user, isAuthenticated } = useAuth()
     const currentProfile = useSelector((state) => state.currentProfile)
+    const { updatedMyList } = useUpdateMyList()
 
     const [showTrailer, setShowTrailer] = useState(false)
 
@@ -24,19 +26,28 @@ export const MovieActions = ({ movie }) => {
         setShowTrailer(true)
     }
 
-    const handleAddOrRemove = () => {
+    const handleAddOrRemove = async () => {
         if (!currentProfile?._id) {
             toast.warning("Seleccioná un perfil primero");
             return;
         }
 
-        dispatch(addToMyLIst({ type: 'movies', item: movie }));
 
-        toast.success(
-            myListProfile
-                ? "Pelicula eliminada de mi lista"
-                : "Pelicula agregada a mi lista"
-        );
+        const updated = await updatedMyList({
+            userId: user?._id,
+            profileId: currentProfile?._id,
+            category: 'movies',
+            item: movie
+        })
+
+        if (updated) {
+            dispatch(addToMyLIst({ type: 'movies', item: movie }));
+            toast.success(
+                myListProfile
+                    ? "Pelicula eliminada de mi lista"
+                    : "Pelicula agregada a mi lista"
+            );
+        }
     };
 
     return (

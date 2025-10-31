@@ -5,13 +5,15 @@ import { useAuth } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToMyLIst } from '../../slices/profileSlice'
+import { useUpdateMyList } from '../../hooks/useUpdateMyList'
 
 export const SerieActions = ({ serie }) => {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
-    const { isAuthenticated } = useAuth()
+    const { user, isAuthenticated } = useAuth()
     const currentProfile = useSelector((state) => state.currentProfile)
+    const { updatedMyList } = useUpdateMyList()
 
     const [showTrailer, setShowTrailer] = useState(false)
 
@@ -25,20 +27,28 @@ export const SerieActions = ({ serie }) => {
         setShowTrailer(true)
     }
 
-    const handleAddOrRemove = () => {
-            if (!currentProfile?._id) {
-                toast.warning("Seleccioná un perfil primero");
-                return;
-            }
-    
+    const handleAddOrRemove = async () => {
+        if (!currentProfile?._id) {
+            toast.warning("Seleccioná un perfil primero");
+            return;
+        }
+
+        const updated = await updatedMyList({
+            userId: user._id,
+            profileId: currentProfile._id,
+            category: 'series',
+            item: serie
+        })
+
+        if (updated) {
             dispatch(addToMyLIst({ type: 'series', item: serie }));
-    
             toast.success(
                 myListProfile
                     ? "Serie eliminada de mi lista"
                     : "Serie agregada a mi lista"
             );
-        };
+        }
+    };
 
     return (
         <div className='movie-actions-top'>
