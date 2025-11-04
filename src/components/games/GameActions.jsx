@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom"
 import { useAuth } from "../../context/AuthContext"
 import { toast } from "react-toastify"
 import { useDispatch, useSelector } from "react-redux"
-import { addToMyLIst } from "../../slices/profileSlice"
+import { updatedMyList } from "../../slices/profileSlice"
 import { useUpdateMyList } from "../../hooks/useUpdateMyList"
 
 export const GameActions = ({ game }) => {
@@ -11,7 +11,7 @@ export const GameActions = ({ game }) => {
 
     const { user, isAuthenticated } = useAuth()
     const currentProfile = useSelector((state) => state.currentProfile)
-    const { updatedMyList } = useUpdateMyList()
+    const { updateMyList } = useUpdateMyList(user?._id)
 
     const myListProfile = currentProfile?.myList?.games?.some(m => m._id === game._id);
 
@@ -21,15 +21,14 @@ export const GameActions = ({ game }) => {
             return;
         }
 
-        const updated = await updatedMyList({
-            userId: user._id,
+        const data = await updateMyList({
             profileId: currentProfile._id,
             category: 'games',
             item: game
         })
 
-        if (updated) {
-            dispatch(addToMyLIst({ type: 'games', item: game }));
+        if (data) {
+            dispatch(updatedMyList({ profile: data.profile }));
             toast.success(
                 myListProfile
                     ? "Juego eliminada de mi lista"
@@ -71,7 +70,7 @@ export const GameActions = ({ game }) => {
                             className="add-btn"
                             onClick={handleAddOrRemove}
                         >
-                            <i className="fa-solid fa-plus"></i>
+                            <i className={`fa-solid ${myListProfile ? 'fa-minus' : 'fa-plus'}`}></i>
                             Mi lista
                         </button>
                     )

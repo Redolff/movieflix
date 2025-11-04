@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import { useAuth } from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToMyLIst } from '../../slices/profileSlice'
+import { updatedMyList } from '../../slices/profileSlice'
 import { useUpdateMyList } from '../../hooks/useUpdateMyList'
 
 export const SerieActions = ({ serie }) => {
@@ -13,7 +13,7 @@ export const SerieActions = ({ serie }) => {
 
     const { user, isAuthenticated } = useAuth()
     const currentProfile = useSelector((state) => state.currentProfile)
-    const { updatedMyList } = useUpdateMyList()
+    const { updateMyList } = useUpdateMyList(user?._id)
 
     const [showTrailer, setShowTrailer] = useState(false)
 
@@ -33,15 +33,14 @@ export const SerieActions = ({ serie }) => {
             return;
         }
 
-        const updated = await updatedMyList({
-            userId: user._id,
+        const data = await updateMyList({
             profileId: currentProfile._id,
             category: 'series',
             item: serie
         })
 
-        if (updated) {
-            dispatch(addToMyLIst({ type: 'series', item: serie }));
+        if (data) {
+            dispatch(updatedMyList({ profile: data.profile }));
             toast.success(
                 myListProfile
                     ? "Serie eliminada de mi lista"
@@ -89,14 +88,16 @@ export const SerieActions = ({ serie }) => {
             )}
 
             {isAuthenticated
-                ? <button
+                ?
+                <button
                     className="add-btn"
                     onClick={handleAddOrRemove}
                 >
-                    <i className="fa-solid fa-plus"></i>
+                    <i className={`fa-solid ${myListProfile ? 'fa-minus' : 'fa-plus'}`}></i>
                     Mi lista
                 </button>
-                : <button
+                :
+                <button
                     className="add-btn"
                     onClick={() => navigate('/login')}
                 >

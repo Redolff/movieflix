@@ -31,25 +31,19 @@ export const currentProfileReducer = createSlice({
 
         },
 
-        addToMyLIst: (state, action) => {
-            const { type, item } = action.payload
+        updatedMyList: (state, action) => {
+            const { profile } = action.payload
 
-            if (!state.myList[type]) state.myList[type] = [];
-            
-            const exists = state.myList[type].some(i => i._id === item._id)
-            if(!exists) {
-                state.myList[type].push(item) // Agregar
-            } else {
-                state.myList[type] = state.myList[type].filter(i => i._id === item._id) // Eliminar
-            }
+            if(!profile) return ;
+            state._id = profile._id
+            state.name = profile.name
+            state.avatar = profile.avatar
+            state.myList = profile.myList
 
-            if(userData && userData.currentProfile) {
+            if(userData) {
                 const updated = {
                     ...userData,
-                    currentProfile: {
-                        ...state,
-                        myList: { ...state.myList }
-                    }
+                    currentProfile: profile
                 }
                 localStorage.setItem('user-movieflix', JSON.stringify(updated))
             }
@@ -71,8 +65,7 @@ export const currentProfileReducer = createSlice({
 
 export const { 
     setProfile, 
-    addToMyLIst, 
-    removeFromMyList, 
+    updatedMyList, 
     clearProfile
 } = currentProfileReducer.actions
 
