@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react"
-import { useLoading } from "../context/LoadingContext"
 
 export const useFetchData = ( resource, filters = {} ) => {
     const [data, setData] = useState([])
-    const { isLoading, setIsLoading } = useLoading()
+    const [isLoading, setIsLoading] = useState()
 
     useEffect(() => {
         if(!resource) return 

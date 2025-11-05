@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }) => {
       saveUserToLocalStorage(data.user)
       setUser(data.user)
       setIsAuthenticated(true)
-      setLoading(true)
+      setLoading(false)
       return { success: true, message: data.message }
     } else {
       setUser(null)
@@ -84,6 +84,42 @@ export const AuthProvider = ({ children }) => {
     }
   }
 
+  const loginGoogle = async (firebaseUser) => {
+    try {
+
+      const normalizedUser = {
+        firstName: firebaseUser.displayName?.split(" ")[0] || "",
+        lastName: firebaseUser.displayName?.split(" ")[1] || "",
+        email: firebaseUser.email,
+        avatar: firebaseUser.photoURL,
+      }
+
+      const response = await fetch('http://localhost:3000/auth/loginGoogle', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json' 
+        },
+        body: JSON.stringify(normalizedUser),
+        credentials: 'include',
+      })
+
+      const data = await response.json()
+      if (!response.ok) throw new Error(data.message)
+      localStorage.setItem("user-movieflix", JSON.stringify(data.user));
+      setUser(data.user)  
+      setIsAuthenticated(true)
+      setLoading(false)
+      return { success: true, message: data.message }
+    } catch (error) {
+      console.error(`Error en el Login Google: ${error}`)
+      setUser(null)
+      setIsAuthenticated(false)
+      setLoading(false)
+      return { success: false, message: error.message }
+    }
+
+  }
+
   const logout = async () => {
     const response = await fetch(`http://localhost:3000/auth/logout`, {
       method: 'POST',
@@ -102,7 +138,7 @@ export const AuthProvider = ({ children }) => {
   }
 
   return (
-    <AuthContext.Provider value={{ user, updatedUser, register, login, logout, isAuthenticated, loading }}>
+    <AuthContext.Provider value={{ user, updatedUser, register, login, loginGoogle, logout, isAuthenticated, loading }}>
       {children}
     </AuthContext.Provider>
   );

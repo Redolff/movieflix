@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react"
-import { useLoading } from "../context/LoadingContext"
 
 export const useFetchProfileId = (userId, profileId) => {
     const [profile, setProfile] = useState()
-    const { isLoading, setIsLoading } = useLoading()
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         if(!userId || !profileId) return 
@@ -24,9 +23,10 @@ export const useFetchProfileId = (userId, profileId) => {
                 setIsLoading(false)
             }
         }
+    
         fetchProfileId()
 
-    }, [setIsLoading, userId, profileId])
+    }, [userId, profileId])
 
     return { profile, isLoading }
 }

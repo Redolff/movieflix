@@ -3,10 +3,12 @@ import { useState } from "react";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from '../../context/AuthContext';
+import { signInWithPopup } from 'firebase/auth';
+import { auth, googleProvider } from '../../firebase';
 
 export const Login = () => {
     const navigate = useNavigate()
-    const { login } = useAuth()
+    const { login, loginGoogle } = useAuth()
     const [formData, setFormData] = useState({
         email: "",
         password: "",
@@ -28,7 +30,7 @@ export const Login = () => {
         if (password !== confirmPassword) return toast.error("Las contraseñas no coinciden")
 
         const result = await login(email, password)
-        if(result.success) {
+        if (result.success) {
             navigate('/profiles')
             toast.success(result.message)
         } else {
@@ -36,9 +38,24 @@ export const Login = () => {
         }
     }
 
-    const handleGoogleLogin = () => {
-        // Aquí en el futuro agregaremos integración con Google OAuth
-        toast.info("Login con Google no implementado todavía");
+    const handleGoogleLogin = async () => {
+        try {
+            // Inicia sesión con Google (Firebase)
+            const result = await signInWithPopup(auth, googleProvider)
+
+            // Envía los datos del usuario a tu backend
+            const { success, message } = await loginGoogle(result.user)
+
+            if (success) {
+                toast.success(`Login con Google exitoso`)
+                navigate("/profiles")
+            } else {
+                toast.error(`Error: ${message}`)
+            }
+        } catch (error) {
+            console.error("Error en handleGoogleLogin:", error)
+            toast.error("Error al iniciar sesión con Google")
+        }
     }
 
     return (

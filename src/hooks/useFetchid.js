@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useState } from "react"
-import { useLoading } from "../context/LoadingContext"
 
 export const useFetchId = (resource, id) => {
     const [dataId, setDataId] = useState(null)
-    const { isLoading, setIsLoading } = useLoading()
+    const [isLoading, setIsLoading] = useState(false)
 
     const fetchId = useCallback(async () => {
         setIsLoading(true)

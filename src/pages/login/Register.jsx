@@ -23,7 +23,7 @@ export const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const { firstName, lastName, email, password, confirmPassword } = formData
+        const { firstName, lastName, email, password, repeatPassword } = formData
 
         if (!firstName.trim() || firstName.length <= 3) {
             return toast.warning("El nombre es obligatorio y debe tener más de 3 letras");
@@ -34,13 +34,13 @@ export const Register = () => {
         if (!email.trim() || !email.includes('@')) {
             return toast.warning("El email es obligatorio y debe contener @");
         }
-        if (!password.trim() || !confirmPassword.trim()) {
+        if (!password.trim() || !repeatPassword.trim()) {
             return toast.warning("La contraseña es obligatoria")
         }
         if (!/[A-Z]/.test(password) || !/[a-z]/.test(password)) {
             return toast.warning("La contraseña debe contener al menos una letra mayúscula y una minúscula");
         }
-        if (password !== confirmPassword) {
+        if (password !== repeatPassword) {
             return toast.error("Las contraseñas no coinciden");
         }
 

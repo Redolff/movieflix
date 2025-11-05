@@ -17,15 +17,15 @@ export const Profiles = () => {
     const currentProfile = useSelector((state) => state.currentProfile)
 
     const { user } = useAuth()
-    const { dataId: allProfiles, loading, refetch } = useFetchId("profiles", user._id)
-    const { handleAddProfile } = useAddProfile("profiles", user._id)
-    const { handleDeleteProfile } = useDeleteProfile("profiles", user._id)
+    const { dataId: allProfiles, loading, refetch } = useFetchId("profiles", user?._id)
+    const { handleAddProfile } = useAddProfile("profiles", user?._id)
+    const { handleDeleteProfile } = useDeleteProfile("profiles", user?._id)
 
     const [showModal, setShowModal] = useState(false)
     const [formData, setFormData] = useState({ name: "", avatar: "" })
     const [selectedProfile, setSelectedProfile] = useState(null)
 
-    const { profile: selectedProfileId } = useFetchProfileId(user._id, selectedProfile)
+    const { profile: selectedProfileId } = useFetchProfileId(user?._id, selectedProfile)
 
     const handleSelect = (profileId) => {
         setSelectedProfile(profileId)
@@ -90,7 +90,8 @@ export const Profiles = () => {
                                 <i className="fa-solid fa-trash"></i>
                             </button>
                         </div>
-                    )}
+                    )
+                }
                 )}
 
                 {allProfiles.length < 4 && (
