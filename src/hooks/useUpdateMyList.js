@@ -4,6 +4,7 @@ export const useUpdateMyList = (userId) => {
         try {
             const response = await fetch(`http://localhost:3000/profiles/myList/${userId}`, {
                 method: "PATCH",
+                credentials: 'include',
                 headers: {
                     "Content-Type": "application/json"
                 },

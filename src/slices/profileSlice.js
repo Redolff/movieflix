@@ -11,8 +11,6 @@ const initialState = {
     }
 }
 
-const userData = JSON.parse(localStorage.getItem('user-movieflix'))     
-
 export const currentProfileReducer = createSlice({
     name: 'currentProfile',
     initialState,
@@ -24,11 +22,6 @@ export const currentProfileReducer = createSlice({
             state.avatar = avatar;
             state.myList = myList || { movies: [], series: [], games: [] };
 
-            if(userData) {
-                const updated = { ...userData, currentProfile: { _id, name, avatar, myList } }
-                localStorage.setItem('user-movieflix', JSON.stringify(updated))
-            }
-
         },
 
         updatedMyList: (state, action) => {
@@ -39,14 +32,6 @@ export const currentProfileReducer = createSlice({
             state.name = profile.name
             state.avatar = profile.avatar
             state.myList = profile.myList
-
-            if(userData) {
-                const updated = {
-                    ...userData,
-                    currentProfile: profile
-                }
-                localStorage.setItem('user-movieflix', JSON.stringify(updated))
-            }
         },
 
         clearProfile: (state) => {
@@ -54,11 +39,6 @@ export const currentProfileReducer = createSlice({
             state.name = null,
             state.avatar = null,
             state.myList = { movies: [], series: [], games: [] }
-
-            if(userData && userData.currentProfile) {
-                const { currentProfile, ...rest } = userData
-                localStorage.setItem('user-movieflix', JSON.stringify(rest))
-            }
         }
     }
 })

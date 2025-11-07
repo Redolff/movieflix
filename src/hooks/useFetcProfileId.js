@@ -10,7 +10,9 @@ export const useFetchProfileId = (userId, profileId) => {
         const fetchProfileId = async () => {
             setIsLoading(true)
             try {
-                const response = await fetch(`http://localhost:3000/profiles/${userId}/${profileId}`)
+                const response = await fetch(`http://localhost:3000/profiles/${userId}/${profileId}`, {
+                    credentials: 'include'
+                })
                 if (!response.ok) {
                     console.error(`Error fetching response: ${response.status}`)
                 }

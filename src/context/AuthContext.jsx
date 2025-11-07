@@ -1,5 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
+const API = `http://localhost:3000/auth`
+
 const AuthContext = createContext(undefined);
 
 export const AuthProvider = ({ children }) => {
@@ -8,31 +10,43 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    const storedGetUser = localStorage.getItem('user-movieflix')
-    if (storedGetUser) {
+    const initAuth = async () => {
       try {
-        const storedUser = JSON.parse(storedGetUser)
-        setUser(storedUser)
-        setIsAuthenticated(true)
+        const response = await fetch(`${API}/refresh`, {
+          method: 'POST',
+          credentials: 'include',
+        })
+        if (!response.ok) {
+          setUser(null)
+          setIsAuthenticated(false)
+          setLoading(false)
+        }
+
+        const data = await response.json()
+        if (data.user) {
+          setUser(data.user);
+          setIsAuthenticated(true);
+        } else {
+          setUser(null);
+          setIsAuthenticated(false);
+        }
+
       } catch (error) {
-        console.error("Error al parsear el usuario de localStorage", error)
-        localStorage.removeItem('user-movieflix')
+        console.error('Initial Auth error: ', error)
         setUser(null)
         setIsAuthenticated(false)
       }
+      finally {
+        setLoading(false)
+      }
     }
-    setLoading(false)
-  }, [])
 
-  const saveUserToLocalStorage = (user) => {
-    localStorage.setItem('user-movieflix', JSON.stringify(user))
-    setUser(user)
-    setIsAuthenticated(true)
-  }
+    initAuth()
+  }, [])
 
   const register = async (firstName, lastName, email, password) => {
     setLoading(true)
-    const response = await fetch(`http://localhost:3000/auth/register`, {
+    const response = await fetch(`${API}/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -44,7 +58,6 @@ export const AuthProvider = ({ children }) => {
     const data = await response.json()
 
     if (response.ok) {
-      saveUserToLocalStorage(data.user)
       setUser(data.user)
       setIsAuthenticated(true)
       setLoading(false)
@@ -59,7 +72,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     setLoading(true)
-    const response = await fetch(`http://localhost:3000/auth/login`, {
+    const response = await fetch(`${API}/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -71,7 +84,6 @@ export const AuthProvider = ({ children }) => {
     const data = await response.json()
 
     if (response.ok) {
-      saveUserToLocalStorage(data.user)
       setUser(data.user)
       setIsAuthenticated(true)
       setLoading(false)
@@ -94,10 +106,10 @@ export const AuthProvider = ({ children }) => {
         avatar: firebaseUser.photoURL,
       }
 
-      const response = await fetch('http://localhost:3000/auth/loginGoogle', {
+      const response = await fetch(`${API}/loginGoogle`, {
         method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json' 
+        headers: {
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(normalizedUser),
         credentials: 'include',
@@ -105,8 +117,7 @@ export const AuthProvider = ({ children }) => {
 
       const data = await response.json()
       if (!response.ok) throw new Error(data.message)
-      localStorage.setItem("user-movieflix", JSON.stringify(data.user));
-      setUser(data.user)  
+      setUser(data.user)
       setIsAuthenticated(true)
       setLoading(false)
       return { success: true, message: data.message }
@@ -121,12 +132,11 @@ export const AuthProvider = ({ children }) => {
   }
 
   const logout = async () => {
-    const response = await fetch(`http://localhost:3000/auth/logout`, {
+    const response = await fetch(`${API}/logout`, {
       method: 'POST',
       credentials: "include"
     })
     if (response.ok) {
-      localStorage.removeItem('user-movieflix')
       setUser(null)
       setIsAuthenticated(false)
     }
@@ -134,7 +144,6 @@ export const AuthProvider = ({ children }) => {
 
   const updatedUser = (newUser) => {
     setUser(newUser)
-    localStorage.setItem('user-movieflix', JSON.stringify(newUser))
   }
 
   return (

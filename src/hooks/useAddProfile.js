@@ -6,6 +6,7 @@ export const useAddProfile = (resource, id) => {
         try {
             const response = await fetch(`http://localhost:3000/${resource}/${id}`, {
                 method: 'POST',
+                credentials: 'include',
                 headers: {
                     'Content-Type': 'application/json'
                 },

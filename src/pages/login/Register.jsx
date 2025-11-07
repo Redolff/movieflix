@@ -45,7 +45,6 @@ export const Register = () => {
         }
 
         const result = await register(firstName, lastName, email, password)
-        console.log('RESULT: ', result)
         if (result.success) {
             navigate('/profiles')
             toast.success(result.message)
